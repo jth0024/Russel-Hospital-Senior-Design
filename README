@@ -21,13 +21,4 @@ I propose that we organize our project into four main sub-directories
 	-For the controller python/bacPypes code:   /controller-files
 	-For our database files: 				    /database-files
 	-For our documentation:        				/documentation
-=======
-Hey Guys!
 
-I hope this works.
->>>>>>> FETCH_HEAD
-=======
-Hey Guys!
-
-I hope this works.
->>>>>>> FETCH_HEAD
