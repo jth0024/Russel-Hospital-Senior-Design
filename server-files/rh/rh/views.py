@@ -1,6 +1,6 @@
 from rh import app
 import os
-from flask import jsonify, render_template, redirect, url_for
+from flask import jsonify, render_template, redirect, url_for, request, flash
 
 #---------------------Sample Data-----------------------
 #alerts 0-Completed, 1-Warning, 2-Critical
@@ -43,13 +43,26 @@ def return_alerts():
 @app.route('/rh/api/v1.0/contact', methods = ['GET'])
 def return_contact():
 	#populate contact info
-	return 'RH contact'
+	return render_template("contact.html")
 
 @app.route('/rh/api/v1.0/equipment', methods = ['GET'])
 def return_equipment():
 	#authenticate
 	#populate equipment
-	return 'RH equipment'
+	return render_template("equipment.html")
+
+@app.route('/rh/api/v1.0/login', methods = ['GET', 'POST'])
+def login():
+	error = None
+	if request.method == 'POST':
+		flash('login')
+		return redirect(url_for('return_overview'))
+
+	return render_template('login.html', error = error)
+
+@app.route('/rh/api/v1.0/logout')
+def logout():
+	return 'logout'
 
 @app.route('/rh/api/v1.0/maintenance', methods = ['GET'])
 def return_maintenance():
