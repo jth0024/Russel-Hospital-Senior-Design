@@ -10,6 +10,9 @@ function getTime() {
         h = Number(h) - 12;
         end = " PM";
     }    
+    if (Number(h) == 0) {
+        h = 12;
+    }
     if (Number(m) < 10) {
         m = "0" + m;
     }

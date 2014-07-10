@@ -6,9 +6,7 @@ app = Flask(__name__)
 
 app.config.update(dict(
     DEBUG=True,
-    SECRET_KEY='development key',
-    USERNAME='admin',
-    PASSWORD='default'
+    SECRET_KEY='development key'
 ))
 
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
