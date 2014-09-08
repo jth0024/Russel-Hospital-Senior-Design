@@ -40,7 +40,8 @@ class Application(BIPSimpleApplication):
 
     def request(self, apdu):
     	print 'Passing along request...\n'
-        BIPSimpleApplication.request(self, apdu)
+    	self.__response_value = None
+        deferred(BIPSimpleApplication.request, self, apdu)
 
     def indication(self, apdu):
         BIPSimpleApplication.indication(self, apdu)
@@ -92,7 +93,10 @@ def read(obj_type, obj_inst, prop_id):
 		#submit request
 		this_application.request(request)
 		#wait for request
-		time.sleep(3)
+		wait = 0
+		while this_application._Application__response_value == None:
+			wait += .01
+			time.sleep(.01)
 		if this_application._Application__response_value:
 			returnVal = this_application._Application__response_value
 		else:
@@ -103,6 +107,7 @@ def read(obj_type, obj_inst, prop_id):
 		returnVal = "Error: " + str(e)
 
 	finally:
+		print "Total wait time: " + str(wait)
 		return returnVal
 
 def write(obj_type, obj_inst, prop_id, value, index, priority):
@@ -120,7 +125,10 @@ def write(obj_type, obj_inst, prop_id, value, index, priority):
 		request.propertyArrayIndex = index
 		request.priority = priority
 		this_application.request(request)
-		time.sleep(3)
+		wait = 0
+		while this_application._Application__response_value == None:
+			wait += .01
+			time.sleep(.01)
 		if this_application._Application__response_value:
 			returnVal = this_application._Application__response_value
 		else:
@@ -129,6 +137,7 @@ def write(obj_type, obj_inst, prop_id, value, index, priority):
 		returnVal = "Error, unable to write"
 
 	finally:
+		print "Total wait time: " + str(wait)
 		return returnVal
 
 def doStart(ini_name):
