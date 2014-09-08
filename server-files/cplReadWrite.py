@@ -25,6 +25,7 @@ this_device = None
 this_application = None
 has_started = False 
 request_addr = None
+applicationThread = None
 
 
 
@@ -54,7 +55,7 @@ class Application(BIPSimpleApplication):
 	        	#print "Current Temperature: " + str(apdu.propertyValue.cast_out(Real)) + "\n"
 	        	self.__response_value = apdu.propertyValue.cast_out(Real)
 	        elif isinstance(apdu, SimpleAckPDU):
-	        	self.__response_value = "Ack"
+	        	self.__response_value = "Ack\n"
 	        elif isinstance(apdu, AbortPDU):
 	        	print "apdu: " + str(apdu.apduAbortRejectReason) + "\n"
 	        elif isinstance(apdu, Error):
@@ -130,40 +131,42 @@ def write(obj_type, obj_inst, prop_id, value, index, priority, ini_name):
 		#applicationThread.join()
 		return returnVal
 
-try:
-	args = ConfigArgumentParser(description=__doc__).parse_args()
+def doStart(ini_name):
+	global this_application, this_device, applicationThread, request_addr
+	try:
+		args = ConfigArgumentParser(description=__doc__).parse_args()
 
-	#Defining Device
-	this_device = LocalDeviceObject(
-    	objectName=args.ini.objectname,
-    	objectIdentifier=int(args.ini.objectidentifier),
-    	maxApduLengthAccepted=int(args.ini.maxapdulengthaccepted),
-    	segmentationSupported=args.ini.segmentationsupported,
-    	vendorIdentifier=int(args.ini.vendoridentifier),
-    	)
-	#build the request address (e.g. 69 to 68)
-	request_addr = str(args.ini.address)[-2:]
-	request_addr = int(request_addr) - int(1)
-	request_addr = str(args.ini.address)[:-2] + str(request_addr)
+		#Defining Device
+		this_device = LocalDeviceObject(
+	    	objectName=args.ini.objectname,
+	    	objectIdentifier=int(args.ini.objectidentifier),
+	    	maxApduLengthAccepted=int(args.ini.maxapdulengthaccepted),
+	    	segmentationSupported=args.ini.segmentationsupported,
+	    	vendorIdentifier=int(args.ini.vendoridentifier),
+	    	)
+		#build the request address (e.g. 69 to 68)
+		request_addr = str(args.ini.address)[-2:]
+		request_addr = int(request_addr) - int(1)
+		request_addr = str(args.ini.address)[:-2] + str(request_addr)
 
-	pss = ServicesSupported()
-	pss['whoIs'] = 1
-	pss['iAm'] = 1
-	pss['readProperty'] = 1
-	pss['writeProperty'] = 1
+		pss = ServicesSupported()
+		pss['whoIs'] = 1
+		pss['iAm'] = 1
+		pss['readProperty'] = 1
+		pss['writeProperty'] = 1
 
-	this_device.protocolServicesSupported = pss.value 
+		this_device.protocolServicesSupported = pss.value 
 
-	this_application = Application(this_device, args.ini.address)
+		this_application = Application(this_device, args.ini.address)
 
-	#Start BACpypes Thread
-	applicationThread = BACpypeThread('BACPYPE-APP')
-	applicationThread.start()
+		#Start BACpypes Thread
+		applicationThread = BACpypeThread('BACPYPE-APP')
+		applicationThread.start()
 
-except Exception, e:
-	print 'An error has occured: ' + str(e) + "\n"
+	except Exception, e:
+		print 'An error has occured: ' + str(e) + "\n"
 
-finally:
-	print "Finally"
+	finally:
+		print "Finally\n"
 
 
