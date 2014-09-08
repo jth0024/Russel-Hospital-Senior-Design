@@ -1,4 +1,4 @@
-from cplReadWrite3 import read, write, doStop, doStart
+from cplReadWrite import read, write, doStop, doStart
 import time
 
 

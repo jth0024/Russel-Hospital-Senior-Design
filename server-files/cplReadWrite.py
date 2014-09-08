@@ -93,12 +93,17 @@ def read(obj_type, obj_inst, prop_id):
 		this_application.request(request)
 		#wait for request
 		time.sleep(3)
+		if this_application._Application__response_value:
+			returnVal = this_application._Application__response_value
+		else:
+			returnVal = "None"
 
 	except Exception, e:
 		print 'An error has occured: ' + str(e) + "\n"
+		returnVal = "Error: " + str(e)
 
 	finally:
-		return this_application._Application__response_value
+		return returnVal
 
 def write(obj_type, obj_inst, prop_id, value, index, priority):
 
@@ -116,7 +121,10 @@ def write(obj_type, obj_inst, prop_id, value, index, priority):
 		request.priority = priority
 		this_application.request(request)
 		time.sleep(3)
-		returnVal = this_application._Application__response_value
+		if this_application._Application__response_value:
+			returnVal = this_application._Application__response_value
+		else:
+			returnVal = "None"
 	except:
 		returnVal = "Error, unable to write"
 
