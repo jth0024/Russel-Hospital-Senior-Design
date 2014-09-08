@@ -9,7 +9,7 @@ ini_name = 'poop'
 
 doStart(ini_name)
 
-confirmationValue = read(obj_type, obj_inst, prop_id, ini_name)
+confirmationValue = read(obj_type, obj_inst, prop_id)
 print "Current Temperature: " + str(confirmationValue) + "\n"
 
 
@@ -21,14 +21,14 @@ priority = int(1)
 
 time.sleep(1)
 
-confirmationValue = write(obj_type, obj_inst, prop_id, value, index, priority, ini_name)
+confirmationValue = write(obj_type, obj_inst, prop_id, value, index, priority)
 print "Write: " + str(confirmationValue)
 
 value = float(0)
 
 print "Lighting LED for 10 seconds\n"
 time.sleep(10)
-confirmationValue = write(obj_type, obj_inst, prop_id, value, index, priority, ini_name)
+confirmationValue = write(obj_type, obj_inst, prop_id, value, index, priority)
 print "Write: " + str(confirmationValue)
 
 doStop()

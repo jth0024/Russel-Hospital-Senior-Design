@@ -78,7 +78,7 @@ def doStop():
 	stop()
 	applicationThread.join()
 
-def read(obj_type, obj_inst, prop_id, ini_name):
+def read(obj_type, obj_inst, prop_id):
 
 	try: 
 		#--------------------------read property request
@@ -98,14 +98,9 @@ def read(obj_type, obj_inst, prop_id, ini_name):
 		print 'An error has occured: ' + str(e) + "\n"
 
 	finally:
-		#applicationThread.stop()
-		#stop()
-		#applicationThread.join()
-		#print 'Finished read request\n'
-		#print 'Done\n'
 		return this_application._Application__response_value
 
-def write(obj_type, obj_inst, prop_id, value, index, priority, ini_name):
+def write(obj_type, obj_inst, prop_id, value, index, priority):
 
 	try:
 		#verify datatype
@@ -126,9 +121,6 @@ def write(obj_type, obj_inst, prop_id, value, index, priority, ini_name):
 		returnVal = "Error, unable to write"
 
 	finally:
-		#applicationThread.stop()
-		#stop()
-		#applicationThread.join()
 		return returnVal
 
 def doStart(ini_name):
