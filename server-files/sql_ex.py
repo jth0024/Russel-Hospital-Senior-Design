@@ -31,7 +31,7 @@ c.execute('''
           fanSpeedOutput INTEGER, fanSPeedEnergieze BOOLEAN)
           ''')
 c.execute('''
-          CREATE TABLE IF NOT EXISTS airHandlerOne
+          CREATE TABLE IF NOT EXISTS setpoints
           (id INTEGER PRIMARY KEY AUTOINCREMENT, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP, tempOA INTEGER, tempRA INTEGER,
           tempMA INTEGER, tempPA INTEGER, tempSA INTEGER, humidityOA INTEGER, humidityRA INTEGER, humiditySA INTEGER, 
           airFlowOA INTEGER, airFlowRA INTEGER, airFlowREA INTEGER, airFlowSA INTEGER, filterPDrop INTEGER, coolingCoilPDrop INTEGER,
