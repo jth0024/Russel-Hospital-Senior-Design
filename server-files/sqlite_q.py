@@ -36,7 +36,7 @@ def dict_factory(cursor, row):
 conn = sqlite3.connect('rh.db')
 c = conn.cursor()
 c.execute('SELECT * FROM devices')
-x = c.fetchall()
+print c.fetchall()
 conn.close()
 
 # con = sqlite3.connect("rh.db")
