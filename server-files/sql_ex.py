@@ -41,15 +41,6 @@ c.execute('''
           heatedWaterRT INTEGER, heatedWaterTDrop INTEGER, heatedWaterSP INTEGER, heatedWaterRP INTEGER, heatedaterPDrop INTEGER, 
           heatedWaterFlow INTEGER)
           ''')
-x = 1
-c.execute('''
-          INSERT INTO devices 
-          VALUES (1,'Air Handler One','Controler01.ini','192.168.92.68','00-14-22-01-23-45')
-          ''')
-c.execute('''
-          INSERT INTO devices 
-          VALUES (3,'Air Handler Two','Controler02.ini','192.168.92.69','00-14-22-01-23-45')
-          ''')
 #possible method for airHandlerOne
 #INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
 #VALUES ('Cardinal','Tom B. Erichsen','Skagen 21','Stavanger','4006','Norway')
