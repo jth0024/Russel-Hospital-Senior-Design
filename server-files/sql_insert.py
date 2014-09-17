@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, insert
 from sqlalchemy.orm import sessionmaker
  
 from sqlalchemy_declarative import Base, Devices
@@ -19,8 +19,18 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
  
 # Insert a Person in the person table
-new_device = Devices(name='device 1', ini='controller1', ip='192.168.92.68', mac='poop')
-session.add(new_device)
+# new_device1 = Devices(name='device 1', ini='controller1', ip='192.168.92.65', mac='poop')
+# new_device2 = Devices(name='device 2', ini='controller2', ip='192.168.92.67', mac='poop')
+# session.add(new_device2,new_device1)
+# session.commit()
+
+
+table = 'devices'
+input = {'name': 'device3', 'ini':'controller3','ip':'192.168.92.44', 'mac':'hello Im a mac'}
+
+while input:
+    values = dict((input.pop(0), input.pop(0)))
+    obj = MyObject(**values)
+    session.add(obj)
 session.commit()
- 
-session.commit()
+	

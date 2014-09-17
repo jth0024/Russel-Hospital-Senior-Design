@@ -12,5 +12,13 @@ DBSession = sessionmaker()
 DBSession.bind = enginesession = DBSession()
 session = DBSession()
 
-device1 = session.query(Devices).first()
-print device1.id
+def row2dict(row):
+    d = {}
+    for column in row.__table__.columns:
+        d[column.name] = str(getattr(row, column.name))
+    return d
+
+device1 = session.query(Devices).order_by(Devices.id.desc()).first()
+dict = row2dict(device1)
+print dict
+
