@@ -1,5 +1,6 @@
-from sqlalchemy import create_engine, insert
+from sqlalchemy import create_engine, insert,update
 from sqlalchemy.orm import sessionmaker
+from sql_query import queryRow
  
 from sqlalchemy_declarative import Base, Devices
  
@@ -25,12 +26,41 @@ session = DBSession()
 # session.commit()
 
 
-table = 'devices'
-input = {'name': 'device3', 'ini':'controller3','ip':'192.168.92.44', 'mac':'hello Im a mac'}
+# populate = ['device3','controller3','192.168.92.44','hello Im a mac']
+# #{'ini': 'controller2', 'ip': '192.168.92.67', 'mac': 'poop', 'id': '1', 'name': 'device 2'}
 
-while input:
-    values = dict((input.pop(0), input.pop(0)))
-    obj = MyObject(**values)
-    session.add(obj)
-session.commit()
-	
+# i = insert(table)
+# i = i.values({'name': 'device 3','ini': 'controller3', 'ip': '192.168.92.67', 'mac': 'poop'})
+# session.execute(i)
+# session.commit()
+
+def insertNewRow(table, dictKeys,*args):
+	l = insert(table)
+	TheDict = {}
+	keytupletemp = tuple(dictKeys)
+	for i in range(0,len(args)):
+		print i
+		keytuple = keytupletemp[i]
+		value = args[i]
+		TheDict[keytuple] = value
+		print TheDict
+	session.execute(l)
+	session.commit()
+
+table = Devices
+deviceDict = queryRow(table)
+print deviceDict
+insertNewRow(table,deviceDict.keys(),'deviceJosh','controllerJosh','192.168.92.Josh','hello Im a Josh')
+results = queryRow(table)
+print results
+
+
+
+	# def userInput(ItemA, ItemB, *args):    
+ #    lst=[]
+ #    lst.append(ItemA)
+ #    lst.append(ItemB)
+ #    for arg in args:
+ #        lst.append(arg)
+
+ #    print ' '.join(lst)

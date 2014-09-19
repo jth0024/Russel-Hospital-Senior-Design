@@ -15,7 +15,12 @@ class Devices(Base):
 	ini = Column(String(250), nullable=False)
 	ip = Column(String(250), nullable=False)
 	mac = Column(String(250), nullable=False)
-
+	
+	def __init__(self, name=None, ini=None, ip=None, mac=None):
+        self.name = name
+        self.ini = ini
+        self.ip = ip
+        self.mac = mac
 class Errors(Base):
 	__tablename__= 'errors'
 	id = Column(Integer, primary_key=True)
