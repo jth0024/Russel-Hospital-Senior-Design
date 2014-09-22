@@ -53,3 +53,14 @@ def queryValue(tableName,columnName):
 	fetchedValue = cursor.fetchone()
 	return fetchedValue
 	db.close()
+
+def queryValueSpecific(tableName,columnName,indicator,indicatorValue):
+	#Note: all inputs must be entered in as string. This comes from the fact that it was done through
+	#SQLite3 instead of SQL_alchemy
+	db = sqlite3.connect('rh.db')
+	cursor = db.cursor()
+	cursor.execute("SELECT " +columnName+ " FROM "+tableName+" WHERE "+indicator+" = "+indicatorValue)
+	fetchedValue = cursor.fetchone()
+	return fetchedValue
+	db.close()
+
