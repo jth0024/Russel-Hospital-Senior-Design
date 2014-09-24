@@ -1,0 +1,5 @@
+"""this file is for reading in a file and sorting each new line into a dictionary"""
+
+def fileToDic(str_fileName):
+	file = open(str_fileName, 'r')
+	print file.read()
