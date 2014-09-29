@@ -49,6 +49,8 @@ def return_contact():
 def return_equipment():
 	#authenticate
 	#populate equipment
+
+	
 	return render_template("equipment.html")
 
 @app.route('/rh/api/v1.0/login', methods = ['GET', 'POST'])

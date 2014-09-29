@@ -59,3 +59,4 @@ function IndexViewModel() {
 
 // Activates knockout.js
 ko.applyBindings(new IndexViewModel(), document.getElementById('main_content'));
+
