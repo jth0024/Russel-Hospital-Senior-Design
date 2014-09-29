@@ -53,7 +53,7 @@ def return_contact():
 def return_equipment():
 	#authenticate
 	#populate equipment
-
+	devices = queryTable("Devices")
 	
 	return render_template("equipment.html")
 

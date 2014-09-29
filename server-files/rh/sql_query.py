@@ -72,6 +72,10 @@ def queryColumn(tableName,columnName):
 
 
 def queryTable(tableName):
+	if tableName == "Devices":
+		table = Devices
+	elif tableName == "Base":
+		table = Base
 	#Method takes the take name to query and returns a dictionary composed of a dictionary that contain all of the row information.
 	#The dicitionary that contains the row information uses the column name as the key, while the returned dictionary uses
 	#the unique ID as the key
@@ -82,7 +86,7 @@ def queryTable(tableName):
 	session = DBSession()
 	dict = {}
 	#Functions assume that the desired output is the last value inputed into the database, arragned by auto-incrementing id
-	for row in session.query(tableName):
+	for row in session.query(table):
 		innerDict = row2dict(row)
 		dict[innerDict['name']]= innerDict
 	return dict
