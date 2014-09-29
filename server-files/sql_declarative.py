@@ -1,7 +1,7 @@
 import os
 import sys
 import datetime
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Date, Boolean
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Date, Boolean, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
@@ -16,11 +16,11 @@ class Devices(Base):
 	ip = Column(String(250), nullable=False)
 	mac = Column(String(250), nullable=False)
 	
-	def __init__(self, name=None, ini=None, ip=None, mac=None):
-        self.name = name
-        self.ini = ini
-        self.ip = ip
-        self.mac = mac
+	# def __init__(self, name=None, ini=None, ip=None, mac=None):
+ #        self.name = name
+ #        self.ini = ini
+ #        self.ip = ip
+ #        self.mac = mac
 class Errors(Base):
 	__tablename__= 'errors'
 	id = Column(Integer, primary_key=True)
@@ -143,3 +143,4 @@ engine = create_engine('sqlite:///rh.db')
 # statements in raw SQL.
 Base.metadata.create_all(engine)
 
+mapper(Devices)

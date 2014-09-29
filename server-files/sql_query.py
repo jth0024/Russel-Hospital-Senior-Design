@@ -1,13 +1,20 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, mapper
 import sqlite3
 from sqlalchemy_declarative import Base, Devices
  
+
 def row2dict(row):
     d = {}
     for column in row.__table__.columns:
         d[column.name] = str(getattr(row, column.name))
     return d
+
+def newrow2dict(row):
+	d = {}
+	for column in row.__table__.columns:
+		d[column.name] = str(getattr(row, column.name))
+		return d
 
 def list2dict(list):
 	d = {}
@@ -31,36 +38,78 @@ def queryRow(tableName):
 	dict = row2dict(databaseRow)
 	return dict
 
-def queryTable(tableName):
-	#Requires table name as a string because it works using SQLite3. Method will return a dictionary of the entire table.
-	#The keys are the unique ID,but can be changed via the list2dict function.(line 15)
-	db = sqlite3.connect('rh.db')
-	cursor = db.cursor()
-	cursor.execute("SELECT * FROM "+tableName)
-	fetchedValue = cursor.fetchall()
-	print fetchedValue
-	tableDictionary = list2dict(fetchedValue)
-	return tableDictionary
+def queryRowSpecific(tableName,rowName,rowValue):
+	####Not Functioning####
+	engine = create_engine('sqlite:///rh.db')
+	Base.metadata.bind = engine
+	DBSession = sessionmaker()
+	DBSession.bind = enginesession = DBSession()
+	session = DBSession()
+	indication = getattr(tableName,rowName)
+	databaseRow = session.query(tableName).filter(indication == rowValue).all()
+	#return databaseRow[0]
+	dict = row2dict(databaseRow)
+	return dict
+	#query is then converted into a dictionary in which the database's column name is the key and the value is value.
+	#dict = row2dict(databaseRow)
+	#return dict
 
+def queryColumn(tableName,columnName):
+	#SQL alchemy process for creating the engine and session to query the database
+	#insert table name as a variable not a string, while the column name must be entered in as a string
+	#column name is then converted from a string using the get attribute command
+	engine = create_engine('sqlite:///rh.db')
+	Base.metadata.bind = engine
+	DBSession = sessionmaker()
+	DBSession.bind = enginesession = DBSession()
+	session = DBSession()
+	list = []
+	varableSelect = getattr(tableName,columnName)
+	for value in session.query(varableSelect):
+		 list.append(value[0])
+	return list
+	#appending line calls out the zeroth spot in a list to only place only the desired string into the list 
+
+
+def queryTable(tableName):
+	#Method takes the take name to query and returns a dictionary composed of a dictionary that contain all of the row information.
+	#The dicitionary that contains the row information uses the column name as the key, while the returned dictionary uses
+	#the unique ID as the key
+	engine = create_engine('sqlite:///rh.db')
+	Base.metadata.bind = engine
+	DBSession = sessionmaker()
+	DBSession.bind = enginesession = DBSession()
+	session = DBSession()
+	dict = {}
+	#Functions assume that the desired output is the last value inputed into the database, arragned by auto-incrementing id
+	for row in session.query(tableName):
+		innerDict = row2dict(row)
+		dict[innerDict['name']]= innerDict
+	return dict
 
 
 def queryValue(tableName,columnName):
-	#Note: all inputs must be entered in as string. This comes from the fact that it was done through
-	#SQLite3 instead of SQL_alchemy
-	db = sqlite3.connect('rh.db')
-	cursor = db.cursor()
-	cursor.execute("SELECT " +columnName+ " FROM "+tableName+" ORDER BY id DESC")
-	fetchedValue = cursor.fetchone()
-	return fetchedValue
-	db.close()
+	#Method uses SQLalchemy to return a single value. The value is determined by the columnName and is found on the last row.
+	engine = create_engine('sqlite:///rh.db')
+	Base.metadata.bind = engine
+	DBSession = sessionmaker()
+	DBSession.bind = enginesession = DBSession()
+	session = DBSession()
+	varableSelect = getattr(tableName,columnName)
+	value  = session.query(varableSelect).order_by(tableName.id.desc()).first()
+	return value[0]
 
-def queryValueSpecific(tableName,columnName,indicator,indicatorValue):
-	#Note: all inputs must be entered in as string. This comes from the fact that it was done through
-	#SQLite3 instead of SQL_alchemy
-	db = sqlite3.connect('rh.db')
-	cursor = db.cursor()
-	cursor.execute("SELECT " +columnName+ " FROM "+tableName+" WHERE "+indicator+" = "+indicatorValue)
-	fetchedValue = cursor.fetchone()
-	return fetchedValue
-	db.close()
+def queryValueSpecific(tableName,columnName,rowName,rowValue):
+	#Method uses SQLalchemy to return a single value. The value is determined by the columnName the row is 
+	#determined where the given row value is found and the given row.
+	engine = create_engine('sqlite:///rh.db')
+	Base.metadata.bind = engine
+	DBSession = sessionmaker()
+	DBSession.bind = enginesession = DBSession()
+	session = DBSession()
+	varableSelect = getattr(tableName,columnName)
+	indication = getattr(tableName,rowName)
+	value  = session.query(varableSelect).filter(indication == rowValue)
+	return value[0][0]
+
 
