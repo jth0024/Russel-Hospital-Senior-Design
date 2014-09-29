@@ -141,8 +141,6 @@ engine = create_engine('sqlite:///rh.db')
  
 # Create all tables in the engine. This is equivalent to "Create Table"
 # statements in raw SQL.
-<<<<<<< HEAD
+
 Base.metadata.create_all(engine)
-=======
-Base.metadata.create_all(engine)
->>>>>>> FETCH_HEAD
+
