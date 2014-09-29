@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, mapper
+from sqlalchemy.orm import sessionmaker
 import sqlite3
-from sqlalchemy_declarative import Base, Devices
+from sql_declarative import Base, Devices
  
 
 def row2dict(row):
