@@ -1,6 +1,6 @@
 import subprocess
 # import time
-subprocess.call("sudo ifconfig eth0 192.168.92.70 netmask 255.255.255.0", shell=True) 
+subprocess.call("sudo ifconfig eth0 192.168.92.70 netmask 255.255.255.0", shell=True)
 subprocess.call("ifconfig", shell=True)
 subprocess.call("sudo ifconfig eth0 192.168.92.69 netmask 255.255.255.0", shell=True) 
 subprocess.call("ifconfig", shell=True)

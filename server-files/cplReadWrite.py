@@ -1,10 +1,10 @@
 #!./BACpypesEnv/bin/python
 
-import sys
+#import sys
 
 #Import BACpypes Stuff
 from bacpypes.consolelogging import ConfigArgumentParser
-from bacpypes.core import run, stop, enable_sleeping, deferred
+from bacpypes.core import run, stop#, enable_sleeping, deferred
 from bacpypes.app import LocalDeviceObject, BIPSimpleApplication
 from bacpypes.basetypes import ServicesSupported
 from threading import Thread
@@ -12,7 +12,7 @@ from bacpypes.apdu import ReadPropertyRequest, Error, AbortPDU, ReadPropertyACK,
 from bacpypes.pdu import Address
 from bacpypes.object import get_datatype
 from bacpypes.constructeddata import Any
-from bacpypes.primitivedata import Null, Atomic, Real, Integer, Unsigned
+from bacpypes.primitivedata import Real#, Integer, Unsigned, Atomic, Null
 
 #random imports
 import time 
@@ -37,11 +37,11 @@ class Application(BIPSimpleApplication):
     def __init__(self, device, address):
         print 'Initializing BACpypes Service...\n'
         BIPSimpleApplication.__init__(self, device, address)
-
+        self.__response_value = None
     def request(self, apdu):
-    	print 'Passing along request...\n'
-    	self.__response_value = None
-        deferred(BIPSimpleApplication.request, self, apdu)
+    	#print 'Passing along request...\n'
+        self.__response_value = None
+        BIPSimpleApplication.request(self, apdu)
 
     def indication(self, apdu):
         BIPSimpleApplication.indication(self, apdu)
@@ -63,7 +63,7 @@ class Application(BIPSimpleApplication):
 	        	print "apdu: " + str(apdu) + "\n"
 
         except Exception, e:
-            print 'Failed: ' + str(e) + "\n"
+            raise e
     #__return_value = None
 
 class BACpypeThread(Thread):
@@ -95,20 +95,18 @@ def read(obj_type, obj_inst, prop_id):
 		#wait for request
 		wait = 0
 		while this_application._Application__response_value == None:
-			wait += .01
-			time.sleep(.01)
-		if this_application._Application__response_value:
-			returnVal = this_application._Application__response_value
-		else:
-			returnVal = "None"
-
+		    wait = wait +.01
+		    time.sleep(.01)
+		returnVal = this_application._Application__response_value
+        
+        
 	except Exception, e:
+		returnVal = None
 		print 'An error has occured: ' + str(e) + "\n"
-		returnVal = "Error: " + str(e)
 
 	finally:
-		print "Total wait time: " + str(wait)
-		return returnVal
+	    print "the total wait time was: " + str(wait) + " seconds"
+	    return returnVal
 
 def write(obj_type, obj_inst, prop_id, value, index, priority):
 
@@ -125,23 +123,17 @@ def write(obj_type, obj_inst, prop_id, value, index, priority):
 		request.propertyArrayIndex = index
 		request.priority = priority
 		this_application.request(request)
-		wait = 0
-		while this_application._Application__response_value == None:
-			wait += .01
-			time.sleep(.01)
-		if this_application._Application__response_value:
-			returnVal = this_application._Application__response_value
-		else:
-			returnVal = "None"
+		time.sleep(.1)
+		returnVal = this_application._Application__response_value
 	except:
 		returnVal = "Error, unable to write"
 
 	finally:
-		print "Total wait time: " + str(wait)
 		return returnVal
 
 def doStart(ini_name):
 	global this_application, this_device, applicationThread, request_addr
+	state = True
 	try:
 		args = ConfigArgumentParser(description=__doc__).parse_args()
 
@@ -173,9 +165,10 @@ def doStart(ini_name):
 		applicationThread.start()
 
 	except Exception, e:
-		print 'An error has occured: ' + str(e) + "\n"
-
+		state = e
+        
 	finally:
-		print "Finally\n"
+		#print "Finally\n"
+		return state
 
 
