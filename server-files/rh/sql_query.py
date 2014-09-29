@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, mapper
 import sqlite3
-from sqlalchemy_declarative import Base, Devices
+from sql_declarative import Base, Devices
  
 
 def row2dict(row):
@@ -72,10 +72,6 @@ def queryColumn(tableName,columnName):
 
 
 def queryTable(tableName):
-	if tableName == "Devices":
-		table = Devices
-	else if tableName == "Base":
-		table = Base
 	#Method takes the take name to query and returns a dictionary composed of a dictionary that contain all of the row information.
 	#The dicitionary that contains the row information uses the column name as the key, while the returned dictionary uses
 	#the unique ID as the key
@@ -86,7 +82,7 @@ def queryTable(tableName):
 	session = DBSession()
 	dict = {}
 	#Functions assume that the desired output is the last value inputed into the database, arragned by auto-incrementing id
-	for row in session.query(table):
+	for row in session.query(tableName):
 		innerDict = row2dict(row)
 		dict[innerDict['name']]= innerDict
 	return dict
