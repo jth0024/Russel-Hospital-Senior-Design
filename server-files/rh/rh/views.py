@@ -1,6 +1,10 @@
+#Packages and sys
 from rh import app
 import os
 from flask import jsonify, render_template, redirect, url_for, request, flash
+
+#Our Modules
+from sql_query import queryTable
 
 #---------------------Sample Data-----------------------
 #alerts 0-Completed, 1-Warning, 2-Critical
@@ -49,6 +53,8 @@ def return_contact():
 def return_equipment():
 	#authenticate
 	#populate equipment
+
+	
 	return render_template("equipment.html")
 
 @app.route('/rh/api/v1.0/login', methods = ['GET', 'POST'])
