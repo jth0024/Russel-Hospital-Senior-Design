@@ -23,5 +23,3 @@ def iniParser(iniFile):
     dictionary = ConfigSectionMap("BACpypes")
     return dictionary.values()
 
-value = iniParser('BACpypes.ini')
-print value
