@@ -80,6 +80,7 @@ def doStop():
 	applicationThread.join()
 
 def read(obj_type, obj_inst, prop_id):
+	wait = 0
 
 	try: 
 		#--------------------------read property request

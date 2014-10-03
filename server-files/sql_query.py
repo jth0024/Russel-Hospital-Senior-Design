@@ -7,14 +7,9 @@ from sql_declarative import Base, Devices, Errors, Maintenance, AirHandlerOne, S
 def row2dict(row):
     d = {}
     for column in row.__table__.columns:
-        d[column.name] = str(getattr(row, column.name))
+    	if str(getattr(row, column.name)) != 'None':
+        	d[column.name] = str(getattr(row, column.name))
     return d
-
-def newrow2dict(row):
-	d = {}
-	for column in row.__table__.columns:
-		d[column.name] = str(getattr(row, column.name))
-		return d
 
 def list2dict(list):
 	d = {}
@@ -50,33 +45,12 @@ def queryRow(tableName):
 	dict = row2dict(databaseRow)
 	return dict
 
-def queryRowSpecific(tableName,rowName,rowValue):
-	if tableName == "Devices":
-		table = Devices
-	elif tableName == "Base":
-		table = Base
-	elif tableName == "Errors":
-		table = Errors
-	elif tableName == "Maintenance":
-		table = Maintenance
-	elif tableName == "AirHandlerOne":
-		table = AirHandlerOne
-	elif tableName == "Setpoints":
-		table = Setpoints
-	####Not Functioning####
-	engine = create_engine('sqlite:///rh.db')
-	Base.metadata.bind = engine
-	DBSession = sessionmaker()
-	DBSession.bind = enginesession = DBSession()
-	session = DBSession()
-	indication = getattr(table,rowName)
-	databaseRow = session.query(table).filter(indication == rowValue).all()
-	#return databaseRow[0]
-	dict = row2dict(databaseRow)
-	return dict
-	#query is then converted into a dictionary in which the database's column name is the key and the value is value.
-	#dict = row2dict(databaseRow)
-	#return dict
+def queryRowSpecific(tableName,key,columnName):
+	#Using the queryTable function to get a dictionary of the entire table with the key as the names. 
+	#Function then returns a single row's dictionary based usign the given key
+	table = queryTable(tableName,key)
+	value = table[columnName]
+	return value
 
 def queryColumn(tableName,columnName):
 	#SQL alchemy process for creating the engine and session to query the database
@@ -107,7 +81,7 @@ def queryColumn(tableName,columnName):
 	#appending line calls out the zeroth spot in a list to only place only the desired string into the list 
 
 
-def queryTable(tableName):
+def queryTable(tableName,key):
 	if tableName == "Devices":
 		table = Devices
 	elif tableName == "Base":
@@ -132,7 +106,7 @@ def queryTable(tableName):
 	#Functions assume that the desired output is the last value inputed into the database, arragned by auto-incrementing id
 	for row in session.query(table):
 		innerDict = row2dict(row)
-		dict[innerDict['name']]= innerDict
+		dict[innerDict[key]]= innerDict
 	return dict
 
 
@@ -183,5 +157,3 @@ def queryValueSpecific(tableName,columnName,rowName,rowValue):
 	indication = getattr(table,rowName)
 	value  = session.query(varableSelect).filter(indication == rowValue)
 	return value[0][0]
-
-

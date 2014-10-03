@@ -10,3 +10,7 @@ insertNewRow(table, rowOne)
 insertNewRow(table, rowTwo)
 insertNewRow(table, rowThree)
 insertNewRow(table, rowFour)
+
+tablename = Setpoints
+setpointrow = {'tempRA':70,'tempMA':72,'tempPA':73,'tempSA':75,'humidityOA':20,'humidityRA':21,'humiditySA':25}
+insertNewRow(tablename, setpointrow)

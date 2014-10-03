@@ -5,7 +5,7 @@ import time
 obj_type = 'analogInput'
 obj_inst = int(2)
 prop_id = 'presentValue'
-ini_name = 'poop'
+ini_name = 'BACpypes'
 
 doStart(ini_name)
 
