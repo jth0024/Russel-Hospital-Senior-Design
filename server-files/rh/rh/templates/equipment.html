@@ -16,10 +16,10 @@
                     <th>IP Address</th>
                 </tr>                    
             </thead>
-            <tbody>
+            <tbody data-bind="foreach: devices">
                 <tr>
-                    <td><input data-bind="value: device_name" placeholder="Name your device..."></input></td>
-                    <td><input data-bind="value: ip_address" placeholder="000.000.00.00"></input></td>
+                    <td data-bind="text: name">##</td>
+                    <td data-bind="text: ip_address">##</td>
                 </tr>
             </tbody>
         </table>

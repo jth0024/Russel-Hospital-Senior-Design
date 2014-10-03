@@ -15,6 +15,12 @@ function PortForm(number) {
     self.ioTypeSelected = ko.observable();
 }
 
+function Device(name, ip_address) {
+    var self = this;
+    self.name = name;
+    self.ip_address = ip_address;
+}
+
 
 //---------------------------------Model------------------------------
 function IndexViewModel() {
@@ -27,6 +33,7 @@ function IndexViewModel() {
     self.io_ports = ko.observableArray(["8", "16"]);
     self.numPortsSelected = ko.observable();
     self.portForms = ko.observableArray([]);
+    self.devices = ko.observableArray([]);
 
     // Operations
     self.displayPortForms = function(formElement) {
@@ -42,6 +49,13 @@ function IndexViewModel() {
         self.portForms.removeAll();
         $("#submit-ports").addClass("disabled");
     }
+
+    $.getJSON("http://localhost:5000/rh/api/v1.0/get-equipment", function(data) { 
+        for (device in data) {
+            self.devices.push(new Device(data[device].name, data[device].ip));
+        }
+        console.log(data);
+    })
 
 }
 

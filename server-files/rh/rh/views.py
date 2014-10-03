@@ -53,9 +53,14 @@ def return_contact():
 def return_equipment():
 	#authenticate
 	#populate equipment
-	devices = queryTable("Devices")
-	
+	#devices = queryTable("Devices")
 	return render_template("equipment.html")
+
+@app.route('/rh/api/v1.0/get-equipment', methods = ['GET'])
+def return_equipment_list():
+	queryResult = queryTable("Devices")
+	#print queryResult["ControllerThree"]
+	return jsonify(queryResult)
 
 @app.route('/rh/api/v1.0/login', methods = ['GET', 'POST'])
 def login():
