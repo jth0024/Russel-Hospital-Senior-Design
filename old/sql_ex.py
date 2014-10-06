@@ -31,7 +31,7 @@ c.execute('''
           fanSpeedOutput INTEGER, fanSPeedEnergieze BOOLEAN)
           ''')
 c.execute('''
-          CREATE TABLE IF NOT EXISTS setpoints
+          CREATE TABLE IF NOT EXISTS airHandlerOne
           (id INTEGER PRIMARY KEY AUTOINCREMENT, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP, tempOA INTEGER, tempRA INTEGER,
           tempMA INTEGER, tempPA INTEGER, tempSA INTEGER, humidityOA INTEGER, humidityRA INTEGER, humiditySA INTEGER, 
           airFlowOA INTEGER, airFlowRA INTEGER, airFlowREA INTEGER, airFlowSA INTEGER, filterPDrop INTEGER, coolingCoilPDrop INTEGER,
@@ -40,15 +40,6 @@ c.execute('''
           chilledWaterSP INTEGER, chilledWaterRP INTEGER, chilledWaterPDrop INTEGER, chilledWaterFlow INTEGER, heatedWaterST INTEGER, 
           heatedWaterRT INTEGER, heatedWaterTDrop INTEGER, heatedWaterSP INTEGER, heatedWaterRP INTEGER, heatedaterPDrop INTEGER, 
           heatedWaterFlow INTEGER)
-          ''')
-
-c.execute('''
-          INSERT INTO devices 
-          VALUES (NULL,'Air Handler One','Controler01.ini','192.168.92.68','00-14-22-01-23-45')
-          ''')
-c.execute('''
-          INSERT INTO devices 
-          VALUES (NULL,'Air Handler Two','Controler02.ini','192.168.92.65','00-14-22-01-23-45')
           ''')
 #possible method for airHandlerOne
 #INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
