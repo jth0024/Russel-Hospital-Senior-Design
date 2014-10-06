@@ -16,11 +16,7 @@ class Devices(Base):
 	ip = Column(String(250), nullable=False)
 	mac = Column(String(250), nullable=False)
 	
-	# def __init__(self, name=None, ini=None, ip=None, mac=None):
- #        self.name = name
- #        self.ini = ini
- #        self.ip = ip
- #        self.mac = mac
+
 class Errors(Base):
 	__tablename__= 'errors'
 	id = Column(Float, primary_key=True)
@@ -93,51 +89,22 @@ class Setpoints(Base):
 	__tablename__ = 'setpoint'
 	id = Column(Integer, primary_key=True)
 	timestamp = Column(DateTime, default=datetime.datetime.utcnow)
-	tempOA = Column(Float)
-	tempRA = Column(Float)
-	tempMA = Column(Float)
-	tempPA = Column(Float)
 	tempSA = Column(Float)
-	humidityOA = Column(Float)
+	tempPA = Column(Float)
+	tempMA = Column(Float)
 	humidityRA = Column(Float)
-	humiditySA = Column(Float)
+	pressureDischargeStatic	 = Column(Float)
 	airFlowOA = Column(Float)
 	airFlowRA = Column(Float)
-	airFlowREA = Column(Float)
-	airFlowSA = Column(Float)
-	filterPDrop = Column(Float)
-	coolingCoilPDrop = Column(Float)
-	heatingCoilPDrop = Column(Float)
-	coOA = Column(Float)
+	airFlowReliefA = Column(Float)
 	coRA = Column(Float)
-	coMA = Column(Float)
-	coSA = Column(Float)
-	fanVoltage = Column(Float)
-	fanAmperage = Column(Float)
-	fanPower = Column(Float)
-	fanPowerUsage = Column(Float)
-	fanStatus = Column(Boolean)
-	chilledWaterST = Column(Float)
-	chilledWaterRT = Column(Float)
-	chilledWaterTDrop = Column(Float)
-	chilledWaterSP = Column(Float)
-	chilledWaterRP = Column(Float)
-	chilledWaterPDrop = Column(Float)
-	chilledWaterFlow = Column(Float)
-	heatedWaterST = Column(Float)
-	heatedWaterRT = Column(Float)
-	heatedWaterTDrop = Column(Float)
-	heatedWaterSP = Column(Float)
-	heatedWaterRP = Column(Float)
-	heatedaterPDrop = Column(Float)
-	heatedWaterFlow = Column(Float)
+
 
 
 
 # Create an engine that stores data in the local directory's
 # sqlalchemy_example.db file.
-#engine = create_engine('sqlite:////Users/Josh/Desktop/rh.db')
-engine = create_engine('sqlite:///rh.db')
+engine = create_engine('sqlite:////Users/Josh/Desktop/Russel-Hospital-Senior-Design/controller-files/rh.db')
 
 # Create all tables in the engine. This is equivalent to "Create Table"
 # statements in raw SQL.
