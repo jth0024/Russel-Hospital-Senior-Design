@@ -1,6 +1,6 @@
 <h1>Russel Hospital Senior Design Project</h1>
-<b>Updated By: Jordan Hurt</b>
-<b>Date: 6/13/2014</b>
+<p><b>Updated By: Jordan Hurt</b></p>
+<p><b>Date: 6/13/2014</b></p>
 
 
 This README document contains some basic information about the project and project structure.
