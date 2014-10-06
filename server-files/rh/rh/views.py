@@ -1,4 +1,8 @@
-#Packages and sys
+#Add database-files to our path
+import sys
+sys.path.insert(0, '../../../database-files')
+
+#flask imports
 from rh import app
 import os
 from flask import jsonify, render_template, redirect, url_for, request, flash
