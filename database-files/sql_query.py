@@ -33,7 +33,7 @@ def queryRow(tableName):
 		table = Setpoints
 	#SQL alchemy process for creating the engine and session to query the database
 	#insert table name as a variable not a string
-	engine = create_engine('sqlite:///rh.db')
+	engine = create_engine('sqlite:////Users/Josh/Desktop/Russel-Hospital-Senior-Design/database-files/rh.db')
 	Base.metadata.bind = engine
 	DBSession = sessionmaker()
 	DBSession.bind = enginesession = DBSession()
@@ -68,7 +68,7 @@ def queryColumn(tableName,columnName):
 		table = AirHandlerOne
 	elif tableName == "Setpoints":
 		table = Setpoints
-	engine = create_engine('sqlite:///rh.db')
+	engine = create_engine('sqlite:////Users/Josh/Desktop/Russel-Hospital-Senior-Design/database-files/rh.db')
 	Base.metadata.bind = engine
 	DBSession = sessionmaker()
 	DBSession.bind = enginesession = DBSession()
@@ -97,7 +97,9 @@ def queryTable(tableName,key):
 	#Method takes the take name to query and returns a dictionary composed of a dictionary that contain all of the row information.
 	#The dicitionary that contains the row information uses the column name as the key, while the returned dictionary uses
 	#the unique ID as the key
-	engine = create_engine('sqlite:///rh.db')
+	#engine = create_engine('sqlite:///rh.db')
+	engine = create_engine('sqlite:////Users/Josh/Desktop/Russel-Hospital-Senior-Design/database-files/rh.db')
+
 	Base.metadata.bind = engine
 	DBSession = sessionmaker()
 	DBSession.bind = enginesession = DBSession()
@@ -124,7 +126,7 @@ def queryValue(tableName,columnName):
 		table = AirHandlerOne
 	elif tableName == "Setpoints":
 		table = Setpoints
-	engine = create_engine('sqlite:///rh.db')
+	engine = create_engine('sqlite:////Users/Josh/Desktop/Russel-Hospital-Senior-Design/database-files/rh.db')
 	Base.metadata.bind = engine
 	DBSession = sessionmaker()
 	DBSession.bind = enginesession = DBSession()
@@ -148,7 +150,7 @@ def queryValueSpecific(tableName,columnName,rowName,rowValue):
 		table = AirHandlerOne
 	elif tableName == "Setpoints":
 		table = Setpoints
-	engine = create_engine('sqlite:///rh.db')
+	engine = create_engine('sqlite:////Users/Josh/Desktop/Russel-Hospital-Senior-Design/database-files/rh.db')
 	Base.metadata.bind = engine
 	DBSession = sessionmaker()
 	DBSession.bind = enginesession = DBSession()
