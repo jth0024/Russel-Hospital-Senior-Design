@@ -2,7 +2,9 @@ import sys
 sys.path.insert(0, '../database-files')
 from sql_insert import insertNewRow
 from sql_query import queryRowSpecific, queryColumn, queryRow, queryTable, queryValue, queryValueSpecific
+from sql_declarative.py import databaseCreation
 
+print databaseCreation()
 table = 'Devices'
 rowOne = {'name':'ControllerOne','ini':'ControllerOne.ini','ip':'192.168.92.69','mac':'macAddressOne'}
 rowTwo = {'name':'ControllerTwo','ini':'ControllerTwo.ini','ip':'192.168.92.70','mac':'macAddressTwo'}

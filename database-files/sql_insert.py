@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, insert,update
 from sqlalchemy.orm import sessionmaker
 from sql_query import queryRow
- 
+sys.path.insert(0, '../database-files')
 from sql_declarative import Base, Devices, Errors, Maintenance, AirHandlerOne, Setpoints
  
 #Functions takes the the table name(i.e. the class found in sql_declarative) and a dictionary to insert all of the values into the database
