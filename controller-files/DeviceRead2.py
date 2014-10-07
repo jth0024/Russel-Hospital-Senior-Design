@@ -3,7 +3,7 @@
 need to have the device configured for all inputs then all outputs'''
 from cplReadWrite import read
 
-array_Port = [1,2,3,4,5,6]
+array_Port = [1]#,2,3,4,5,6]
 array_ObjType = ['analogOutput', 'analogInput', 'analogOutput', 'analogOutput', 'analogOutput', 'analogOutput']
 array_PropId = ['presentValue', 'presentValue', 'presentValue', 'presentValue', 'presentValue', 'presentValue']
 

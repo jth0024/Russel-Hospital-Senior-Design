@@ -83,70 +83,345 @@ class ControlLoop(object):
 		outputValue = 'Insert control eqation here'
 		return outputValue
 
-#Inputs
-#class TempRA(AnalogInput):
-#class TempOA(AnalogInput):
+
+### Inputs
+#add name field
+
 class TempMA(AnalogInput,ControlLoop):
-	pValue = 2.3
-	iValue = 4
-	Dvalue = 3
+    def __init__(self, port):
+        self._portNum = port
+        pValue = 2.3
+        iValue = 4
+        dValue = 3
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
 class TempPA(AnalogInput,ControlLoop):
-	pValue = 2.3
-	iValue = 4
-	Dvalue = 3
+    def __init__(self, port):
+        pValue = 2.3
+        iValue = 4
+        dValue = 3
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
 class TempSA(AnalogInput,ControlLoop):
-	pValue = 2.3
-	iValue = 4
-	Dvalue = 3
-#class HumidityOA(AnalogInput):
-class HumidityRA(AnalogInput,ControlLoop):
-	pValue = 2.3
-	iValue = 4
-	Dvalue = 3
-#class HumidityMA(AnalogInput):
-#class HumiditySA(AnalogInput):
+    def __init__(self, port):
+        pValue = 2.3
+        iValue = 4
+        dValue = 3
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
 class AirFlowOA(AnalogInput,ControlLoop):
-	pValue = 2.3
-	iValue = 4
-	Dvalue = 3
+    def __init__(self, port):
+        pValue = 2.3
+        iValue = 4
+        dValue = 3
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
 class AirFlowRA(AnalogInput,ControlLoop):
-	pValue = 2.3
-	iValue = 4
-	Dvalue = 3
+    def __init__(self, port):
+        pValue = 2.3
+        iValue = 4
+        dValue = 3
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
 class AirFlowREA(AnalogInput,ControlLoop):
-	pValue = 2.3
-	iValue = 4
-	Dvalue = 3
-#class AirFlowSA(AnalogInput):
-#class FilterPDrop(AnalogInput):
-#class CoolingCoilPDrop(AnalogInput):
-#class HeatingCoilPDrop(AnalogInput):
-#class COOA(AnalogInput):
+    def __init__(self, port):
+        pValue = 2.3
+        iValue = 4
+        dValue = 3
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class HumidityRA(AnalogInput,ControlLoop):
+    def __init__(self, port):
+        pValue = 2.3
+        iValue = 4
+        dValue = 3
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
 class CORA(AnalogInput,ControlLoop):
-	pValue = 2.3
-	iValue = 4
-	Dvalue = 3
-#class COMA(AnalogInput):
-#class COSA(AnalogInput):
-#class FanVoltage(AnalogInput):
-#class FanAmperage(AnalogInput):
-#class FanPower(AnalogInput):
-#class FanPowerUsage(AnalogInput):
-#class FanStatus(AnalogInput):
-#class ChilledWaterST(AnalogInput):
-#class ChilledWaterRT(AnalogInput):
-#class ChilledWaterTDrop(AnalogInput):
-#class ChilledWaterSP(AnalogInput):
-#class ChilledWaterRP(AnalogInput):
-#class ChilledWaterPDrop(AnalogInput):
-#class ChilledWaterFlow(AnalogInput):
-#class HeatedWaterST(AnalogInput):
-#class HeatedWaterRT(AnalogInput):
-#class HeatedWaterTDrop(AnalogInput):
-#class HeatedWaterSP(AnalogInput):
-#class HeatedWaterRP(AnalogInput):
-#class HeatedWaterPDrop(AnalogInput):
-#class HeatedWaterFlow(AnalogInput):
+    def __init__(self, port):
+        pValue = 2.3
+        iValue = 4
+        dValue = 3
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class TempRA(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+        
+class TempOA(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+	
+class HumidityOA(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class HumidityMA(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class HumiditySA(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class AirFlowSA(AnalogInput):
+    def __init__(self, port):
+        _portNum = port
+    def getPortNum():
+        return _portNum
+    def setPortNum(port):
+        _portNum = port
+
+class FilterPDrop(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class CoolingCoilPDrop(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class HeatingCoilPDrop(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class COOA(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class COMA(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class COSA(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class FanVoltage(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class FanAmperage(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class FanPower(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class FanPowerUsage(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class FanStatus(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class ChilledWaterST(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class ChilledWaterRT(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class ChilledWaterTDrop(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class ChilledWaterSP(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class ChilledWaterRP(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class ChilledWaterPDrop(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class ChilledWaterFlow(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class HeatedWaterST(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class HeatedWaterRT(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class HeatedWaterTDrop(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class HeatedWaterSP(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class HeatedWaterRP(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class HeatedWaterPDrop(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
+class HeatedWaterFlow(AnalogInput):
+    def __init__(self, port):
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
 
 #Outputs
 #class DamperPositionOA(AnalogOutput):

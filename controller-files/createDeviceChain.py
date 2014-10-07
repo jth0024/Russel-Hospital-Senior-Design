@@ -1,6 +1,7 @@
-from iniParser import *
-from Class import *
-from SQL.sql_query import *
+from iniParser import iniParser, CompIPToRequestIP
+from Class import Device
+from SQL.sql_query import queryColumn
+from SQL.sql_declarative import Devices
 
 def createChain():
     iniName = queryColumn(Devices, "ini")

@@ -1,11 +1,11 @@
 from createDeviceChain import createChain 
 from DeviceRead2 import deviceRead
 from cplReadWrite import doStart, doStop
-from DeviceWrite import deviceWrite
+#from DeviceWrite import deviceWrite
 import time
-from fileToDic import fileToDic
+#from OtherStuff.fileToDic import fileToDic
 
-for x in range(0,3):
+for x in range(0,1):
     start = time.time()                     ################################
     deviceList = createChain()
     here = deviceList
@@ -14,8 +14,7 @@ for x in range(0,3):
             started = doStart(here)
             #print started
             if started == True:
-                #for x in range (0,10):
-                 #   print "trial " + str(x) + ":\n"
+                print "Started read 1..."
                 start1 = time.time()            ################################
                 valDic = deviceRead()
                 end1 = time.time()              ################################
@@ -23,16 +22,22 @@ for x in range(0,3):
                 #insertRow(valDic)
                 #manipulate data
                 start2 = time.time()            ################################
-                writeDic = fileToDic('writeTest.txt')
-                deviceWrite(writeDic)       
+                #print "Started write ..."
+                #writeDic = fileToDic('writeTest.txt')
+                #deviceWrite(writeDic)       
                 end2 = time.time()              ################################
                 start3 = time.time()            ################################
-                valDic2 = deviceRead()
+               # print "Started read 2..."
+                #valDic2 = deviceRead()
                 end3 = time.time()              ################################
             else:
                 print 'An error has been captured: ' + str(started) + ", " + here.getObjectName() + "\n"
+                
+                
         except Exception, e:
             print 'An error has Accured: ' + str(e) + "\n" 
+            doStop()
+            started = False
         
         finally:
             if started == True:
@@ -43,5 +48,6 @@ for x in range(0,3):
                 print "The second read tool: " + str(end3 - start3) + " seconds"
                 print "The whole program took: " + str(end3 - start) + " seconds" 
             here = here.getNext()
+
             
     #print valDic
