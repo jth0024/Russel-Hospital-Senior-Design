@@ -1,8 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-import sqlite3
-from sql_declarative import Base, Devices, Errors, Maintenance, AirHandlerOne, Setpoints
+import sys
 sys.path.insert(0, '../database-files')
+from sql_declarative import Base, Devices, Errors, Maintenance, AirHandlerOne, Setpoints
 
 def row2dict(row):
     d = {}

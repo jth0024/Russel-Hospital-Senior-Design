@@ -1,8 +1,9 @@
 import sys
 sys.path.insert(0, '../database-files')
+from sql_declarative import databaseCreation
 from sql_insert import insertNewRow
 from sql_query import queryRowSpecific, queryColumn, queryRow, queryTable, queryValue, queryValueSpecific
-from sql_declarative.py import databaseCreation
+
 
 print databaseCreation()
 table = 'Devices'
