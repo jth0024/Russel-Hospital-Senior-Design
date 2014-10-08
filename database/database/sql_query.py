@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import sys
-sys.path.insert(0, '../database-files')
+#sys.path.insert(0, '../database-files')
 from sql_declarative import Base, Devices, Errors, Maintenance, AirHandlerOne, Setpoints
 
 def row2dict(row):
@@ -33,7 +33,7 @@ def queryRow(tableName):
 		table = Setpoints
 	#SQL alchemy process for creating the engine and session to query the database
 	#insert table name as a variable not a string
-	engine = create_engine('sqlite:////Users/Josh/Desktop/Russel-Hospital-Senior-Design/database-files/rh.db')
+	engine = create_engine('sqlite:////Users/Josh/Desktop/Russel-Hospital-Senior-Design/database/database/rh.db')
 	Base.metadata.bind = engine
 	DBSession = sessionmaker()
 	DBSession.bind = enginesession = DBSession()
@@ -68,7 +68,7 @@ def queryColumn(tableName,columnName):
 		table = AirHandlerOne
 	elif tableName == "Setpoints":
 		table = Setpoints
-	engine = create_engine('sqlite:////Users/Josh/Desktop/Russel-Hospital-Senior-Design/database-files/rh.db')
+	engine = create_engine('sqlite:////Users/Josh/Desktop/Russel-Hospital-Senior-Design/database/database/rh.db')
 	Base.metadata.bind = engine
 	DBSession = sessionmaker()
 	DBSession.bind = enginesession = DBSession()
@@ -98,7 +98,7 @@ def queryTable(tableName,key):
 	#The dicitionary that contains the row information uses the column name as the key, while the returned dictionary uses
 	#the unique ID as the key
 	#engine = create_engine('sqlite:///rh.db')
-	engine = create_engine('sqlite:////Users/Josh/Desktop/Russel-Hospital-Senior-Design/database-files/rh.db')
+	engine = create_engine('sqlite:////Users/Josh/Desktop/Russel-Hospital-Senior-Design/database/database/rh.db')
 
 	Base.metadata.bind = engine
 	DBSession = sessionmaker()
@@ -126,7 +126,7 @@ def queryValue(tableName,columnName):
 		table = AirHandlerOne
 	elif tableName == "Setpoints":
 		table = Setpoints
-	engine = create_engine('sqlite:////Users/Josh/Desktop/Russel-Hospital-Senior-Design/database-files/rh.db')
+	engine = create_engine('sqlite:////Users/Josh/Desktop/Russel-Hospital-Senior-Design/database/database/rh.db')
 	Base.metadata.bind = engine
 	DBSession = sessionmaker()
 	DBSession.bind = enginesession = DBSession()
@@ -150,7 +150,7 @@ def queryValueSpecific(tableName,columnName,rowName,rowValue):
 		table = AirHandlerOne
 	elif tableName == "Setpoints":
 		table = Setpoints
-	engine = create_engine('sqlite:////Users/Josh/Desktop/Russel-Hospital-Senior-Design/database-files/rh.db')
+	engine = create_engine('sqlite:////Users/Josh/Desktop/Russel-Hospital-Senior-Design/database/database/rh.db')
 	Base.metadata.bind = engine
 	DBSession = sessionmaker()
 	DBSession.bind = enginesession = DBSession()

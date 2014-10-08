@@ -111,7 +111,7 @@ def databaseCreation():
 	global Base
 	# Create an engine that stores data in the local directory's
 	# sqlalchemy_example.db file.
-	engine = create_engine('sqlite:///rh.db')
+	engine = create_engine('sqlite:////Users/Josh/Desktop/Russel-Hospital-Senior-Design/database/database/rh.db')
 	# Create all tables in the engine. This is equivalent to "Create Table"
 	# statements in raw SQL.
 	Base.metadata.create_all(engine)

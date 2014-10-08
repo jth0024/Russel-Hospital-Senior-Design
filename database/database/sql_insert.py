@@ -7,7 +7,7 @@ from sql_declarative import Base, Devices, Errors, Maintenance, AirHandlerOne, S
 #Functions takes the the table name(i.e. the class found in sql_declarative) and a dictionary to insert all of the values into the database
 def insertNewRow(tableName, TheDict):
 	#engine = create_engine('sqlite:///rh.db')
-	engine = create_engine('sqlite:////Users/Josh/Desktop/Russel-Hospital-Senior-Design/database-files/rh.db')
+	engine = create_engine('sqlite:////Users/Josh/Desktop/Russel-Hospital-Senior-Design/database/database/rh.db')
 	if tableName == "Devices":
 		table = Devices
 	elif tableName == "Errors":
