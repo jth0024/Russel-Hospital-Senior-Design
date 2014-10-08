@@ -101,12 +101,6 @@ class Setpoints(Base):
 	airFlowReliefA = Column(Float)
 	coRA = Column(Float)
 
-# # Create an engine that stores data in the local directory's
-# # sqlalchemy_example.db file.
-# engine = create_engine('sqlite:///rh.db')
-# # Create all tables in the engine. This is equivalent to "Create Table"
-# # statements in raw SQL.
-# Base.metadata.create_all(engine)
 def databaseCreation():
 	global Base
 	# Create an engine that stores data in the local directory's
