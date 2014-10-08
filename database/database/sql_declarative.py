@@ -108,7 +108,7 @@ class Setpoints(Base):
 # # statements in raw SQL.
 # Base.metadata.create_all(engine)
 def databaseCreation():
-	global Base
+	global Basea
 	# Create an engine that stores data in the local directory's
 	# sqlalchemy_example.db file.
 	engine = create_engine('sqlite:///rh.db')
