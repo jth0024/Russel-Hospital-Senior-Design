@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(0, '../database/database')
 from sql_insert import insertNewRow
 from sql_declarative import databaseCreation
 

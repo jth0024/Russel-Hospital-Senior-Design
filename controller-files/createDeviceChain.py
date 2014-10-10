@@ -1,12 +1,12 @@
 import sys
-sys.path.append('../database')
+sys.path.append('../database/database')
 from iniParser import iniParser, CompIPToRequestIP
 from Class import Device
 from sql_query import queryColumn 
 from sql_declarative import Devices
 
 def createChain():
-    iniName = queryColumn(Devices, "ini")
+    iniName = queryColumn('Devices', "ini")
     for x in range(0,len(iniName)):
         value = iniParser("iniFiles/" + str(iniName[x]))
         value.append(CompIPToRequestIP(value[1]))
