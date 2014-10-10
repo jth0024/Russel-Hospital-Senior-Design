@@ -51,7 +51,6 @@ class Application(BIPSimpleApplication):
 
     def confirmation(self, apdu):
         #Executed when a packet is recieved (not just a BACnet packet)
-        print "Here is poop.."
         try:
             if isinstance(apdu, ReadPropertyACK):
 	        	#print "Current Temperature: " + str(apdu.propertyValue.cast_out(Real)) + "\n"

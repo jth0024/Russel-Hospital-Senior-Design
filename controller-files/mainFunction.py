@@ -3,7 +3,7 @@ from DeviceRead2 import deviceRead
 from cplReadWrite import doStart, doStop
 #from DeviceWrite import deviceWrite
 import time
-#from OtherStuff.fileToDic import fileToDic
+#from fileToDic import fileToDic
 
 for x in range(0,1):
     start = time.time()                     ################################
