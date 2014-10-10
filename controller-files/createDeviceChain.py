@@ -1,5 +1,5 @@
 import sys
-sys.path.append('../database-files')
+sys.path.append('../database')
 from iniParser import iniParser, CompIPToRequestIP
 from Class import Device
 from sql_query import queryColumn 
