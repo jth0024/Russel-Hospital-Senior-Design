@@ -36,7 +36,6 @@ class Application(BIPSimpleApplication):
     def __init__(self, device, address):
         print 'Initializing BACpypes Service...\n'
         BIPSimpleApplication.__init__(self, device, address)
-        self.__response_value = None
     
     def request(self, apdu):
     	print 'Passing along request...\n'
@@ -80,8 +79,8 @@ def doStop():
 	applicationThread.join()
 
 def read(obj_type, port, prop_id):
-
-	try: 
+    
+    try: 
 		#--------------------------read property request
 		#verify datatype
 		print "Reading..."
@@ -121,11 +120,11 @@ def read(obj_type, port, prop_id):
 		returnVal = this_application._Application__response_value
         
         
-	except Exception, e:
+    except Exception, e:
 		returnVal = None
-		print 'An error has happened (CPLRW 127): ' + str(e) + "\n"
+		print 'An error has happened (CPLRW 126): ' + str(e) + "\n"
 
-	finally:
+    finally:
 	    #print "the total wait time was: " + str(wait) + " seconds"
 	    return returnVal
 
@@ -157,19 +156,21 @@ def doStart(device):
 	has_started = True
 	try:
 		#args = ConfigArgumentParser(description=__doc__).parse_args()
-
+		print device.getMaxApduLengthAccepted(),device.getObjectIdentifier()
 		#Defining Device
 		this_device = LocalDeviceObject(
+	    	#objectName="Name",
 	    	objectName=device.getObjectName(),
+	    	#objectIdentifier=2450,
 	    	objectIdentifier=int(device.getObjectIdentifier()),
-	    	maxApduLengthAccepted=int(device.getMaxApduLengthAccepted()),
-	    	segmentationSupported=device.getSegmentationSupported(),
-	    	vendorIdentifier=int(device.getVendorIdentifier()),
+	    	maxApduLengthAccepted=1024,
+	    	#maxApduLenghtAccepted = int(device.getMaxApduLengthAccepted()),
+	    	segmentationSupported="segmentedBoth",#device.getSegmentationSupported(),
+	    	vendorIdentifier=245,#int(device.getVendorIdentifier()),
 	    	)
 		
-		print 
 		
-		
+		#request_addr = "192.168.92.68"
 		request_addr = device.getRequestAddress()
 
 		pss = ServicesSupported()
