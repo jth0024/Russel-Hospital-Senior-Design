@@ -21,5 +21,6 @@ def CompIPToRequestIP(compIP):
 def iniParser(iniFile):
     Config.read(iniFile)
     dictionary = ConfigSectionMap("BACpypes")
-    return dictionary.values()
+    print dictionary
+    return dictionary
 
