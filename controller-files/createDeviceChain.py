@@ -13,40 +13,40 @@ def createChain():
     for x in range(0,len(iniName)):
 
         dictionary = iniParser("iniFiles/" + str(iniName[x]))
-        dictionary['RequestIP'] = CompIPToRequestIP(dictionary['address'])
+        dictionary['requestip'] = CompIPToRequestIP(dictionary['address'])
         if x == 0:
-            deviceList = Device(dictionary['objectName'],dictionary['address'],dictionary['objectIdentifier'],dictionary['maxApduLengthAccepted'],dictionary['segmentationSupported'],dictionary['vendorIdentifier'],dictionary['foreignPort'],dictionary['foreignBBMD'],dictionary['foreignTTL'],dictionary['RequestIP'])
+            deviceList = Device(dictionary['objectname'],dictionary['address'],dictionary['objectidentifier'],dictionary['maxapdulengthaccepted'],dictionary['segmentationsupported'],dictionary['vendoridentifier'],dictionary['foreignport'],dictionary['foreignbbmd'],dictionary['foreignttl'],dictionary['requestip'])
             counter = deviceList
         elif x ==1 :
-            temp = Device(dictionary['objectName'],dictionary['address'],dictionary['objectIdentifier'],dictionary['maxApduLengthAccepted'],dictionary['segmentationSupported'],dictionary['vendorIdentifier'],dictionary['foreignPort'],dictionary['foreignBBMD'],dictionary['foreignTTL'],dictionary['RequestIP'])
+            temp = Device(dictionary['objectname'],dictionary['address'],dictionary['objectidentifier'],dictionary['maxapdulengthaccepted'],dictionary['segmentationsupported'],dictionary['vendoridentifier'],dictionary['foreignport'],dictionary['foreignbbmd'],dictionary['foreignttl'],dictionary['requestip'])
             deviceList.addDevice(temp)
             counter = counter.getNext()
         else:
-            temp = Device(dictionary['objectName'],dictionary['address'],dictionary['objectIdentifier'],dictionary['maxApduLengthAccepted'],dictionary['segmentationSupported'],dictionary['vendorIdentifier'],dictionary['foreignPort'],dictionary['foreignBBMD'],dictionary['foreignTTL'],dictionary['RequestIP'])
+            temp = Device(dictionary['objectname'],dictionary['address'],dictionary['objectidentifier'],dictionary['maxapdulengthaccepted'],dictionary['segmentationsupported'],dictionary['vendoridentifier'],dictionary['foreignport'],dictionary['foreignbbmd'],dictionary['foreignttl'],dictionary['requestip'])
 
-        value = iniParser("iniFiles/" + str(iniName[x]))
-        value['requestAddress'] = str(CompIPToRequestIP(value[1]))
-        if x == 0:
-            deviceList = Device(value['objectName'],value['address'],
-            value['objectIdentifier'],value['maxApduLengthAccepted'],
-            value['segmentationSupported'],value['vendorIdentifier'],
-            value['foreignPort'],value['foreignBBMD'],
-            value['foreignTTL'],value['requestAddress'])
-            counter = deviceList
-        elif x ==1 :
-            temp = Device(value['objectName'],value['address'],
-            value['objectIdentifier'],value['maxApduLengthAccepted'],
-            value['segmentationSupported'],value['vendorIdentifier'],
-            value['foreignPort'],value['foreignBBMD'],
-            value['foreignTTL'],value['requestAddress'])
-            deviceList.addDevice(temp)
-            counter = counter.getNext()
-        else:
-            temp = Device(value['objectName'],value['address'],
-            value['objectIdentifier'],value['maxApduLengthAccepted'],
-            value['segmentationSupported'],value['vendorIdentifier'],
-            value['foreignPort'],value['foreignBBMD'],
-            value['foreignTTL'],value['requestAddress'])
+        # value = iniParser("iniFiles/" + str(iniName[x]))
+        # value['requestAddress'] = str(CompIPToRequestIP(value[1]))
+        # if x == 0:
+        #     deviceList = Device(value['objectName'],value['address'],
+        #     value['objectIdentifier'],value['maxApduLengthAccepted'],
+        #     value['segmentationSupported'],value['vendorIdentifier'],
+        #     value['foreignPort'],value['foreignBBMD'],
+        #     value['foreignTTL'],value['requestAddress'])
+        #     counter = deviceList
+        # elif x ==1 :
+        #     temp = Device(value['objectName'],value['address'],
+        #     value['objectIdentifier'],value['maxApduLengthAccepted'],
+        #     value['segmentationSupported'],value['vendorIdentifier'],
+        #     value['foreignPort'],value['foreignBBMD'],
+        #     value['foreignTTL'],value['requestAddress'])
+        #     deviceList.addDevice(temp)
+        #     counter = counter.getNext()
+        # else:
+        #     temp = Device(value['objectName'],value['address'],
+        #     value['objectIdentifier'],value['maxApduLengthAccepted'],
+        #     value['segmentationSupported'],value['vendorIdentifier'],
+        #     value['foreignPort'],value['foreignBBMD'],
+        #     value['foreignTTL'],value['requestAddress'])
 
             counter.addDevice(temp)
             counter = counter.getNext()

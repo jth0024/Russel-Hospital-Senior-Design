@@ -14,7 +14,7 @@ for x in range(0,1):
             started = doStart(here)
             #print started
             if started == True:
-                print "Started read 1..."
+                #print "Started read 1..."
                 start1 = time.time()            ################################
                 valDic = deviceRead()
                 end1 = time.time()              ################################
@@ -35,18 +35,18 @@ for x in range(0,1):
                 
                 
         except Exception, e:
-            print 'An error has Accured: ' + str(e) + "\n" 
+            print 'An error has occured: ' + str(e) + "\n" 
             doStop()
             started = False
         
         finally:
             if started == True:
                 doStop()
-                print "The first read took: " + str(end1 - start1) + " seconds"
+                #print "The first read took: " + str(end1 - start1) + " seconds"
                 print valDic
-                print "The write took: " + str(end2 - start2) + " seconds"
-                print "The second read tool: " + str(end3 - start3) + " seconds"
-                print "The whole program took: " + str(end3 - start) + " seconds" 
+                #print "The write took: " + str(end2 - start2) + " seconds"
+                #print "The second read took: " + str(end3 - start3) + " seconds"
+                #print "The whole program took: " + str(end3 - start) + " seconds" 
             here = here.getNext()
 
             
