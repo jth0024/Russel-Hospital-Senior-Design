@@ -1,9 +1,9 @@
 from createDeviceChain import createChain 
 from DeviceRead2 import deviceRead
 from cplReadWrite import doStart, doStop
-#from DeviceWrite import deviceWrite
+from DeviceWrite import deviceWrite
 import time
-#from fileToDic import fileToDic
+from fileToDic import fileToDic
 
 for x in range(0,1):
     start = time.time()                     ################################
@@ -23,8 +23,8 @@ for x in range(0,1):
                 #manipulate data
                 start2 = time.time()            ################################
                 #print "Started write ..."
-                #writeDic = fileToDic('writeTest.txt')
-                #deviceWrite(writeDic)       
+                writeDic = fileToDic('writeTest.txt')
+                deviceWrite(writeDic)       
                 end2 = time.time()              ################################
                 start3 = time.time()            ################################
                # print "Started read 2..."
