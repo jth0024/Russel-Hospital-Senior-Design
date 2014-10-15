@@ -1,6 +1,6 @@
-from Class import TempMA
+from createDeviceChain import createChain
 
-item = TempMA(1)
-print item.getPortNum()
-print item.gettype()
-print item.Ploop(75, 76, item.getPValue())
+
+devices = createChain()
+
+print devices.getPortItem(2).getPortNum()

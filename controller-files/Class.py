@@ -1,4 +1,3 @@
-
 class AnalogInput(object):
 	
 	def __init__(self):
@@ -112,7 +111,6 @@ class TempMA(AnalogInput,ControlLoop):
         return self._portNum
     def setPortNum(self, port):
         self._portNum = port
-    
     def getPValue(self):
         return self._pValue
     def setPValue(self, pValue):
@@ -587,7 +585,15 @@ class HeatedWaterFlow(AnalogInput):
         self._portNum = port
 
 #Outputs
-#class DamperPositionOA(AnalogOutput):
+class DamperPositionOA(AnalogOutput):
+    def __init__(self, port):
+        AnalogOutput.__init__(self)
+        self._portNum = port
+    def getPortNum(self):
+        return self._portNum
+    def setPortNum(self, port):
+        self._portNum = port
+
 #class DamperPositionRA(AnalogOutput):
 #class DamperPositionRE(AnalogOutput):
 #class ValuePositionCW(AnalogOutput):
@@ -598,19 +604,27 @@ class HeatedWaterFlow(AnalogInput):
 
 
 #Class for controlling the device parameters
+#deviceDic['objectname'],deviceDic['address'],
+#            deviceDic['objectidentifier'],deviceDic['maxapdulengthaccepted'],
+#            deviceDic['segmentationsupported'],deviceDic['vendoridentifier'],
+#            deviceDic['foreignport'],deviceDic['foreignbbmd'],
+#            deviceDic['foreignttl'],deviceDic['requestip']
+
+
 
 class Device(object):
-    def __init__(self, objectName, deviceAddress, objectIdentifier, maxApduLengthAccepted, segmentationSupported, vendorIdentifier, foreignPort, foreignBBMD, foreignTTL, requestAddress):
-        self._objectName = objectName
-        self._deviceAddress = deviceAddress
-        self._requestAddress = requestAddress
-        self._objectIdentifier = objectIdentifier
-        self._maxApduLengthAccepted = maxApduLengthAccepted
-        self._segmentationSupported = segmentationSupported
-        self._vendorIdentifier = vendorIdentifier
-        self._foreignPort = foreignPort
-        self._foreignBBMD = foreignBBMD
-        self._foreignTTL = foreignTTL
+    def __init__(self, deviceDic, portDic):
+        self._objectName = deviceDic['objectname']
+        self._deviceAddress = deviceDic['address']
+        self._requestAddress = deviceDic['requestip']
+        self._objectIdentifier = deviceDic['objectidentifier']
+        self._maxApduLengthAccepted = deviceDic['maxapdulengthaccepted']
+        self._segmentationSupported = deviceDic['segmentationsupported']
+        self._vendorIdentifier = deviceDic['vendoridentifier']
+        self._foreignPort = deviceDic['foreignport']
+        self._foreignBBMD = deviceDic['foreignbbmd']
+        self._foreignTTL = deviceDic['foreignttl']       
+        self._ports = portDic
         self._next = None
         self._online = True
         self._manual = False
@@ -652,6 +666,23 @@ class Device(object):
     def getNext(self):   
         return self._next
     
+    def getPortItem(self, portNumber):
+        if portNumber == 1:
+            return self._ports["portone"]
+        elif portNumber == 2:
+            return self._ports["porttwo"]
+        elif portNumber == 3:
+            return self._ports["portthree"]
+        elif portNumber == 4:
+            return self._ports["portfour"]
+        elif portNumber == 5:
+            return self._ports["portfive"]
+        elif portNumber == 6:
+            return self._ports["portsix"]
+        elif portNumber == 7:
+            return self._ports["portseven"]
+        else:
+            return "Error: Port unknown"
     def setObjectName(self, name):   
         self._objectName = name    
     
@@ -684,5 +715,6 @@ class Device(object):
     
     def setNext(self, next):   
         self._next = next
+
 
 

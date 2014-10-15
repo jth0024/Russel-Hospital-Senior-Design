@@ -23,3 +23,7 @@ def iniParser(iniFile):
     dictionary = ConfigSectionMap("BACpypes")
     return dictionary
 
+def parsePorts(iniFile):
+    Config.read(iniFile)
+    dictionary = ConfigSectionMap("Ports")
+    return dictionary
