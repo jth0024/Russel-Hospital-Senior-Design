@@ -1,6 +1,6 @@
 from createDeviceChain import createChain 
-from DeviceRead2 import deviceRead
-from cplReadWrite import doStart, doStop
+#from DeviceRead2 import deviceRead
+from cplReadWrite import doStart, doStop, read
 from DeviceWrite import deviceWrite
 import time
 from fileToDic import fileToDic
@@ -16,7 +16,10 @@ for x in range(0,1):
             if started == True:
                 #print "Started read 1..."
                 start1 = time.time()            ################################
-                valDic = deviceRead()
+                readDic = {}
+                for item in range(1,len(here.getPort)+1):
+                    portObj = here.getPortItem(item)
+                    readDic[item] = read(portObj.gettype(), int(portObj.getportNum()), portObj.getvalue())       #Calls readRequest and gets the value from sensor, loops for each I/O port
                 end1 = time.time()              ################################
                 #commit it to the databas
                 #insertRow(valDic)
@@ -43,7 +46,7 @@ for x in range(0,1):
             if started == True:
                 doStop()
                 #print "The first read took: " + str(end1 - start1) + " seconds"
-                print valDic
+                print readDic
                 #print "The write took: " + str(end2 - start2) + " seconds"
                 #print "The second read took: " + str(end3 - start3) + " seconds"
                 #print "The whole program took: " + str(end3 - start) + " seconds" 

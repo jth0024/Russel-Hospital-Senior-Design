@@ -1,6 +1,12 @@
-from createDeviceChain import createChain
+from iniParser import parsePorts
 
+helps = parsePorts("iniFiles/ControllerOne.ini")
+help = parsePorts("iniFiles/ControllerFour.ini")
 
-devices = createChain()
+print help
+print helps
+print len(help)
 
-print devices.getPortItem(2).getPortNum()
+for item in range(1,len(help)+1):
+    print help.getPortItem(item)
+
