@@ -19,7 +19,7 @@ for x in range(0,1):
                 readDic = {}
                 for item in range(1,len(here.getPort)+1):
                     portObj = here.getPortItem(item)
-                    readDic[item] = read(portObj.gettype(), int(portObj.getportNum()), portObj.getvalue())       #Calls readRequest and gets the value from sensor, loops for each I/O port
+                    readDic[int(portObj.getportNum())] = read(portObj.gettype(), int(portObj.getportNum()), portObj.getvalue())       #Calls readRequest and gets the value from sensor, loops for each I/O port
                 end1 = time.time()              ################################
                 #commit it to the databas
                 #insertRow(valDic)
@@ -35,7 +35,7 @@ for x in range(0,1):
                 end3 = time.time()              ################################
             else:
                 print 'An error has been captured: ' + str(started) + ", " + here.getObjectName() + "\n"
-                
+                           
                 
         except Exception, e:
             print 'An error has occured: ' + str(e) + "\n" 
@@ -45,12 +45,9 @@ for x in range(0,1):
         finally:
             if started == True:
                 doStop()
-                #print "The first read took: " + str(end1 - start1) + " seconds"
+                print "The first read took: " + str(end1 - start1) + " seconds"
                 print readDic
-                #print "The write took: " + str(end2 - start2) + " seconds"
-                #print "The second read took: " + str(end3 - start3) + " seconds"
-                #print "The whole program took: " + str(end3 - start) + " seconds" 
+                print "The write took: " + str(end2 - start2) + " seconds"
+                print "The second read took: " + str(end3 - start3) + " seconds"
+                print "The whole program took: " + str(end3 - start) + " seconds" 
             here = here.getNext()
-
-            
-    #print valDic
