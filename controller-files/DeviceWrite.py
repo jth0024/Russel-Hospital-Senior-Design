@@ -1,5 +1,3 @@
-
-
 from cplReadWrite import write
 
 array_Port = [1,3,4,5,6]
