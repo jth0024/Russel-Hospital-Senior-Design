@@ -666,6 +666,9 @@ class Device(object):
     def getNext(self):   
         return self._next
     
+    def getPort(self):
+        return self._ports
+    
     def getPortItem(self, portNumber):
         if portNumber == 1:
             return self._ports["portone"]

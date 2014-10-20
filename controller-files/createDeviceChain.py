@@ -13,12 +13,12 @@ def createChain():
     for index in range(0,len(iniName)):
         portDic = None
         deviceDic = None
-#        print "\n" +iniName[index]
-#        print portDic
+        print "\n" +iniName[index]
+        print portDic
         deviceDic = iniParser("iniFiles/" + str(iniName[index]))
         deviceDic['requestip'] = CompIPToRequestIP(deviceDic['address'])
         portDic = parsePorts("iniFiles/" + str(iniName[index]))  #Still reads [Ports] information even if nothing is in file, not sure how to fix
-       
+        print portDic
 
         for port in portDic:
             portDic[port] = instantiatePortClass(portDic[port], portNumber(port))
