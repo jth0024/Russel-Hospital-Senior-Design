@@ -3,10 +3,13 @@ Config = ConfigParser.ConfigParser()
 
 def ConfigSectionMap(section):
     dict1 = {}
-    options = Config.options(section)
+    options = Config.options(section) 
     for option in options:
         try:
-            dict1[option] = Config.get(section, option)
+            if Config.get(section, option) == 'None':
+                a=5
+            else:
+                dict1[option] = Config.get(section, option)
         except:
             print("exception on %s!" % option)
             dict1[option] = None
