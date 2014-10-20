@@ -23,21 +23,21 @@ class AnalogOutput(object):
 	    self._priority = 1
 
 	def gettype(self):
-		return self.type
+		return self._type
 	def getvalue(self):
-		return self.value
+		return self._value
 	def getindex(self):
-		return self.index
+		return self._index
 	def getpriority(self):
-		return self.priority
-	def settype(self,type):
-		self.type = type
+		return self._priority
+	def settype(self,Type):
+		self._type = Type
 	def setValue(self,value):
-		self.value = value
+		self._value = value
 	def selfindex(self, index):
-		self.index = index
+		self._index = index
 	def selfpriority(self, priority):
-		self.priority = priority
+		self._priority = priority
 
 class DigitalInput(object):
 	

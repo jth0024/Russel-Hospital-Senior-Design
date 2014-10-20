@@ -17,17 +17,18 @@ for x in range(0,1):
                 #print "Started read 1..."
                 start1 = time.time()            ################################
                 readDic = {}
-                for item in range(1,len(here.getPort)+1):
+                for item in range(1,len(here.getPort())+1):
                     portObj = here.getPortItem(item)
-                    readDic[int(portObj.getportNum())] = read(portObj.gettype(), int(portObj.getportNum()), portObj.getvalue())       #Calls readRequest and gets the value from sensor, loops for each I/O port
+                    #readDic[int(portObj.getPortNum())] = read(str(portObj.gettype()), int(portObj.getPortNum()), str(portObj.getvalue()))      
+                    print str(portObj.gettype())
                 end1 = time.time()              ################################
                 #commit it to the databas
                 #insertRow(valDic)
                 #manipulate data
                 start2 = time.time()            ################################
                 #print "Started write ..."
-                writeDic = fileToDic('writeTest.txt')
-                deviceWrite(writeDic)       
+                #writeDic = fileToDic('writeTest.txt')
+                #deviceWrite(writeDic)       
                 end2 = time.time()              ################################
                 start3 = time.time()            ################################
                # print "Started read 2..."
@@ -39,15 +40,15 @@ for x in range(0,1):
                 
         except Exception, e:
             print 'An error has occured: ' + str(e) + "\n" 
-            doStop()
+           # doStop()
             started = False
         
         finally:
             if started == True:
-                doStop()
                 print "The first read took: " + str(end1 - start1) + " seconds"
+                doStop()
                 print readDic
-                print "The write took: " + str(end2 - start2) + " seconds"
-                print "The second read took: " + str(end3 - start3) + " seconds"
-                print "The whole program took: " + str(end3 - start) + " seconds" 
+                #print "The write took: " + str(end2 - start2) + " seconds"
+                #print "The second read took: " + str(end3 - start3) + " seconds"
+                print "The whole program took: " + str(end3 - start) + " seconds\n\n" 
             here = here.getNext()

@@ -34,11 +34,11 @@ applicationThread = None
 class Application(BIPSimpleApplication):
 
     def __init__(self, device, address):
-        print 'Initializing BACpypes Service...\n'
+        print 'Initializing BACpypes Service...'
         BIPSimpleApplication.__init__(self, device, address)
     
     def request(self, apdu):
-    	print 'Passing along request...\n'
+    	print 'Passing along request...'
         self.__response_value = None
         BIPSimpleApplication.request(self, apdu)
 
@@ -77,14 +77,15 @@ class BACpypeThread(Thread):
 def doStop():
 	stop()
 	applicationThread.join()
+	#applicationThread = None
 
-def read(obj_type, port, prop_id):
+def read( obj_type, port, prop_id):
     
     try: 
 		#--------------------------read property request
 		#verify datatype
-		print "Reading..."
-		print obj_type, port, prop_id
+		#print "Reading..."
+		print request_addr, obj_type, port, prop_id
 		
 		if obj_type.isdigit():
 		    obj_type = int(obj_type)
@@ -106,12 +107,8 @@ def read(obj_type, port, prop_id):
 		request.pduDestination = Address(request_addr)
 		
 		#submit request
-		
-		print request.pduDestination
-		
-		
 		this_application.request(request)
-		print "Waiting for reply..."
+		#print "Waiting for reply..."
 		#wait for request
 		wait = 0
 		while this_application._Application__response_value == None:
@@ -154,25 +151,27 @@ def write(obj_type, obj_inst, prop_id, value, index, priority):
 def doStart(device):
 	global this_application, this_device, applicationThread, request_addr, has_started
 	has_started = True
+	applicationThread = None
 	try:
-		#args = ConfigArgumentParser(description=__doc__).parse_args()
-		print device.getMaxApduLengthAccepted(),device.getObjectIdentifier()
+
 		#Defining Device
 		this_device = LocalDeviceObject(
 	    	#objectName="Name",
 	    	objectName=device.getObjectName(),
 	    	#objectIdentifier=2450,
 	    	objectIdentifier=int(device.getObjectIdentifier()),
-	    	maxApduLengthAccepted=1024,
+	    	maxApduLengthAccepted=int(device.getMaxApduLengthAccepted()),
 	    	#maxApduLenghtAccepted = int(device.getMaxApduLengthAccepted()),
-	    	segmentationSupported="segmentedBoth",#device.getSegmentationSupported(),
-	    	vendorIdentifier=245,#int(device.getVendorIdentifier()),
+	    	segmentationSupported=device.getSegmentationSupported(), 
+	    	#device.getSegmentationSupported(),
+	    	vendorIdentifier=int(device.getVendorIdentifier()),
+	    	#int(device.getVendorIdentifier()),
 	    	)
-		
 		
 		#request_addr = "192.168.92.68"
 		request_addr = device.getRequestAddress()
-
+		print 'req Add: ' + request_addr
+        
 		pss = ServicesSupported()
 		pss['whoIs'] = 1
 		pss['iAm'] = 1
@@ -187,11 +186,13 @@ def doStart(device):
 		applicationThread = BACpypeThread('BACPYPE-APP')
 		applicationThread.start()
 
-	except Exception:
+	except Exception, e:
 		has_started = False
+		print 'An error has occured: ' + str(e) + "\n" 
 	
 	finally:
 		#print "Finally\n"
+		#print has_started
 		return has_started
 
 

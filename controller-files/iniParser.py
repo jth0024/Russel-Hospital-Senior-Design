@@ -1,7 +1,7 @@
 import ConfigParser
-Config = ConfigParser.ConfigParser()
+#Config = ConfigParser.ConfigParser()
 
-def ConfigSectionMap(section):
+def ConfigSectionMap(section, Config):
     dict1 = {}
     options = Config.options(section) 
     for option in options:
@@ -22,11 +22,13 @@ def CompIPToRequestIP(compIP):
 	return RequestIP
 
 def iniParser(iniFile):
+    Config = ConfigParser.ConfigParser()
     Config.read(iniFile)
-    dictionary = ConfigSectionMap("BACpypes")
+    dictionary = ConfigSectionMap("BACpypes", Config)
     return dictionary
 
 def parsePorts(iniFile):
+    Config = ConfigParser.ConfigParser()
     Config.read(iniFile)
-    dictionary = ConfigSectionMap("Ports")
+    dictionary = ConfigSectionMap("Ports", Config)
     return dictionary
