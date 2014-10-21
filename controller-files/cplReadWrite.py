@@ -79,7 +79,7 @@ def doStop():
 	applicationThread.join()
 	#applicationThread = None
 
-def read( obj_type, port, prop_id):
+def read(obj_type, port, prop_id):
     
     try: 
 		#--------------------------read property request
@@ -108,7 +108,7 @@ def read( obj_type, port, prop_id):
 		
 		#submit request
 		this_application.request(request)
-		#print "Waiting for reply..."
+		print "Waiting for reply..."
 		#wait for request
 		wait = 0
 		while this_application._Application__response_value == None:

@@ -1,33 +1,15 @@
-<<<<<<< HEAD
-# from createDeviceChain import createChain
-=======
-from iniParser import parsePorts
->>>>>>> FETCH_HEAD
+from createDeviceChain import createChain 
+from cplReadWrite import doStart, doStop, read
 
-helps = parsePorts("iniFiles/ControllerOne.ini")
-help = parsePorts("iniFiles/ControllerFour.ini")
+deviceList = createChain()
+here = deviceList.getNext()
 
-<<<<<<< HEAD
-# devices = createChain()
+doStart(here)
+readDic = {}
+portObj = here.getPortItem(1)
+print portObj
+readDic[int(portObj.getPortNum())] = read(str(portObj.gettype()), int(portObj.getPortNum()), str(portObj.getvalue()))
 
-# print devices.getPortItem(2).getPortNum()
+doStop()
 
-from iniParser import iniParser, parsePorts
-
-deviceDic = parsePorts("iniFiles/ControllerTwo.ini")
-print deviceDic
-deviceDic2 = parsePorts("iniFiles/ControllerThree.ini")
-print deviceDic2
-deviceDic3 = parsePorts("iniFiles/ControllerFour.ini")
-print deviceDic3
-deviceDic4 = parsePorts("iniFiles/ControllerOne.ini")
-print deviceDic4
-=======
-print help
-print helps
-print len(help)
-
-for item in range(1,len(help)+1):
-    print help.getPortItem(item)
-
->>>>>>> FETCH_HEAD
+print readDic

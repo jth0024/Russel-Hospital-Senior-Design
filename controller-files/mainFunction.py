@@ -5,7 +5,7 @@ from DeviceWrite import deviceWrite
 import time
 from fileToDic import fileToDic
 
-for x in range(0,1):
+for x in range(0,3):
     start = time.time()                     ################################
     deviceList = createChain()
     here = deviceList
@@ -19,7 +19,7 @@ for x in range(0,1):
                 readDic = {}
                 for item in range(1,len(here.getPort())+1):
                     portObj = here.getPortItem(item)
-                    #readDic[int(portObj.getPortNum())] = read(str(portObj.gettype()), int(portObj.getPortNum()), str(portObj.getvalue()))      
+                    readDic[int(portObj.getPortNum())] = read(str(portObj.gettype()), int(portObj.getPortNum()), str(portObj.getvalue()))      
                     print str(portObj.gettype())
                 end1 = time.time()              ################################
                 #commit it to the databas
@@ -40,7 +40,7 @@ for x in range(0,1):
                 
         except Exception, e:
             print 'An error has occured: ' + str(e) + "\n" 
-           # doStop()
+            doStop()
             started = False
         
         finally:

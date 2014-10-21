@@ -17,8 +17,15 @@ def ConfigSectionMap(section, Config):
 
 def CompIPToRequestIP(compIP):
 	RequestIP = compIP[-2:]
+	#Not working if IP address ends in a value larger that 100...not sure if it is an issue
+	if int(RequestIP) < 1 or int(RequestIP) > 99:
+	    print "Error : Invalid IP address"
+	    return None
 	RequestIP = int(RequestIP) - int(1)
-	RequestIP = str(compIP)[:-2] + str(RequestIP)
+	if int(RequestIP) < 10:
+	    RequestIP = str(compIP)[:-2] + "0" + str(RequestIP)
+	else:
+	    RequestIP = str(compIP)[:-2] + str(RequestIP)
 	return RequestIP
 
 def iniParser(iniFile):
