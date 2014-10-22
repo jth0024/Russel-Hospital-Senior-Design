@@ -38,7 +38,7 @@ class Application(BIPSimpleApplication):
         BIPSimpleApplication.__init__(self, device, address)
     
     def request(self, apdu):
-    	print 'Passing along request...'
+    	#print 'Passing along request...'
         self.__response_value = None
         BIPSimpleApplication.request(self, apdu)
 
@@ -120,7 +120,16 @@ def read(obj_type, port, prop_id):
     except Exception, e:
 		returnVal = None
 		print 'An error has happened (CPLRW 126): ' + str(e) + "\n"
-
+		#this_application.request(request)
+		#print "Waiting for reply..."
+		#wait for request
+		#wait = 0
+		#while this_application._Application__response_value == None:
+		#    wait = wait + .01
+		#    time.sleep(.01)
+		#returnVal = this_application._Application__response_value
+        
+        
     finally:
 	    #print "the total wait time was: " + str(wait) + " seconds"
 	    return returnVal
@@ -150,8 +159,12 @@ def write(obj_type, obj_inst, prop_id, value, index, priority):
 
 def doStart(device):
 	global this_application, this_device, applicationThread, request_addr, has_started
-	has_started = True
+	this_application = None
+	this_device = None
 	applicationThread = None
+	request_addr = None
+	has_started = True
+	
 	try:
 
 		#Defining Device
@@ -188,7 +201,7 @@ def doStart(device):
 
 	except Exception, e:
 		has_started = False
-		print 'An error has occured: ' + str(e) + "\n" 
+		print 'An error has occured: ' + str(e) 
 	
 	finally:
 		#print "Finally\n"

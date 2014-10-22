@@ -2,7 +2,7 @@ from createDeviceChain import createChain
 from cplReadWrite import doStart, doStop, read
 
 deviceList = createChain()
-here = deviceList.getNext()
+here = deviceList#.getNext()
 
 doStart(here)
 readDic = {}
@@ -13,3 +13,4 @@ readDic[int(portObj.getPortNum())] = read(str(portObj.gettype()), int(portObj.ge
 doStop()
 
 print readDic
+
