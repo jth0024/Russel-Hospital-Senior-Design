@@ -110,10 +110,10 @@ def read(device, portObject):
 		    propertyIdentifier=prop_id,
 		    )
 		request.pduDestination = Address(request_addr)
-		time.sleep(.01)
+		time.sleep(.01)  #I dont know why, but this makes the code work correctly.
 		#submit request
 		this_application.request(request)
-		print "Waiting for reply..."
+		#print "Waiting for reply..."
 		#wait for request
 		wait = 0
 		while this_application._Application__response_value == None and wait <= maximumWait:
@@ -124,22 +124,23 @@ def read(device, portObject):
         
     except Exception, e:
 		returnVal = None
-		print 'An error has happened (CPLRW 126): ' + str(e) + "\n"
-		#this_application.request(request)
-		#print "Waiting for reply..."
-		#wait for request
-		#wait = 0
-		#while this_application._Application__response_value == None:
-		#    wait = wait + .01
-		#    time.sleep(.01)
-		#returnVal = this_application._Application__response_value
-        
+		print 'An error has happened (CPLRW 126): ' + str(e) + "\n"        
         
     finally:
 	    #print "the total wait time was: " + str(wait) + " seconds"
 	    return returnVal
 
-def write(obj_type, obj_inst, prop_id, value, index, priority):
+
+
+def write(device, portObject, value):
+    request_addr = device.getRequestAddress()
+    obj_type = portObject.getType()
+    obj_inst = portObject.getPortNum()
+    prop_id = portObject.getProp()
+    index = portObject.getIndex()
+    priority = portObject.getPriority()
+
+
 
 	try:
 		#verify datatype

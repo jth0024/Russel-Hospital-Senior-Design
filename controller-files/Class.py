@@ -80,6 +80,7 @@ class DigitalOutput(object):
 
 class ControlLoop(object):
 	def __init__(self):
+        self._connectedTo = 1
 	    return
     
 	def Ploop(self, setpoint,currentValue):
@@ -91,7 +92,8 @@ class ControlLoop(object):
 	def PIDloop(self, setpoint,currentValue,pValue,iValue,dValue):
 		outputValue = 'Insert control eqation here'
 		return outputValue
-
+    def getConnectedTo():
+        return self._connectedTo
 
 ### Inputs
 #add name field
