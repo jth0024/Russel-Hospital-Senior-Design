@@ -79,7 +79,12 @@ def doStop():
 	applicationThread.join()
 	#applicationThread = None
 
-def read(obj_type, port, prop_id):
+def read(device, portObject):
+    request_addr = device.getRequestAddress()    
+    obj_type = portObject.getType()
+    port = portObject.getPortNum()
+    prop_id = portObject.getProp()
+    maximumWait = 6  #seconds
     
     try: 
 		#--------------------------read property request
@@ -105,13 +110,13 @@ def read(obj_type, port, prop_id):
 		    propertyIdentifier=prop_id,
 		    )
 		request.pduDestination = Address(request_addr)
-		
+		time.sleep(.01)
 		#submit request
 		this_application.request(request)
 		print "Waiting for reply..."
 		#wait for request
 		wait = 0
-		while this_application._Application__response_value == None:
+		while this_application._Application__response_value == None and wait <= maximumWait:
 		    wait = wait + .01
 		    time.sleep(.01)
 		returnVal = this_application._Application__response_value
@@ -182,8 +187,8 @@ def doStart(device):
 	    	)
 		
 		#request_addr = "192.168.92.68"
-		request_addr = device.getRequestAddress()
-		print 'req Add: ' + request_addr
+		#request_addr = device.getRequestAddress()
+		#print 'req Add: ' + request_addr
         
 		pss = ServicesSupported()
 		pss['whoIs'] = 1

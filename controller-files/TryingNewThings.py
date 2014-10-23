@@ -12,22 +12,22 @@ while here != None:
 for x in range(0,1):
     here = deviceList
     while here != None:
-         try:
+        try:
             print "Connecting to " + here.getObjectName()
             readDic = {}
             for item in range(1,len(here.getPort())+1):
                 portObj = here.getPortItem(item)
-                readDic[int(portObj.getPortNum())] = read(str(portObj.gettype()), int(portObj.getPortNum()), str(portObj.getvalue()))
+                readDic[int(portObj.getPortNum())] = read(here, portObj)
             
-         except Exception, e:
+        except Exception, e:
             print 'An error has occured: ' + str(e) + "\n"
         
-         finally:
+        finally:
             print readDic
             here = here.getNext()
 
 #claosing all the threads
 #here = deviceList
 #while here != None:
-    doStop()
+doStop()
 #    here = here.getNext()
