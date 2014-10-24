@@ -42,8 +42,10 @@ def createChain():
 def instantiatePortClass(str_className,portNum):
     if str_className.lower() == "led":
         return DamperPositionOA(portNum)
-    elif str_className.lower() == "thermistor":
-        return TempPA(portNum)
+    elif str_className.lower() == "thermistorcc":
+        return TempSA(portNum, 1)
+    elif str_className.lower() == "thermistorhc":
+        return TempPA(portNum, 3)
     else:
         return "Error: Type not reconised"
     

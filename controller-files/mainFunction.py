@@ -1,15 +1,25 @@
 from createDeviceChain import createChain 
 from cplReadWrite import doStart, doStop, read, write
-import time
+import time, sys
+from ErrorClasses import *
 
 # STILL NEED TO DO ERROR CHECKING FOR WHOLE PROGRAM
 
-setpoint = 70
+setpoint = 80
+deviceList = createChain()
+started = False
+
+#Testing Thread connections
+connected = True
+startM = time.time()
+count = 0
+run = True
 
 
+#while run == True:
 for x in range(0,1):
+    count = count + 1
     start = time.time()                     ################################
-    deviceList = createChain()
     here = deviceList
     while here != None:
         try:
@@ -26,25 +36,16 @@ for x in range(0,1):
                     portObj = here.getPortItem(item)
                     readDic[int(portObj.getPortNum())] = read(here, portObj)
                 end1 = time.time()              ################################
-                print "After Reading all ports: " + str(readDic)                 
+                #print "After Reading all ports: " + str(readDic)                 
                 #commit it to the database
                 #insertRow(valDic)
-                
-                #manipulate data
+               
+                 #manipulate data
                 for item in range(1,numberOfConnectedPorts):
                     portObj = here.getPortItem(item)
                     if portObj.getControlled():
                         manipulatedDic[portObj.getConnectedTo()] = portObj.Ploop(setpoint, readDic[portObj.getPortNum()])     #manipulatedDic should conatin the value from the Ploop with the key being the port of the actuator that the sensor is paired with
-                print "after Ploop : " + str(manipulatedDic)
-            
-            #temporary fix for working with LED and not actual actuators
-                for value in manipulatedDic:
-                    if manipulatedDic[value] < 0:
-                        manipulatedDic[value] = 0.0
-                    elif manipulatedDic[value] > 4:
-                        manipulatedDic[value] = 4.0
-                print "after correction for LED : " + str(manipulatedDic)
-  
+                #print "after Ploop : " + str(manipulatedDic)
                         
                 start2 = time.time()            ################################
                 #print "Started write ..."
@@ -55,12 +56,14 @@ for x in range(0,1):
 
             
             
-            else:
-                print 'An error has been captured: ' + str(started) + ", " + here.getObjectName()  + "\n\n"
+           # else:
+           #     print 'An error has been captured: ' + str(started) + ", " + here.getObjectName()  + "\n\n"
             
-        except Exception, e:
-            print 'An error has occured: ' + str(e) + "\n" 
-            started = False
+        except ComputerNotConnectedToIP, exc:
+            print exc 
+        
+        except ArithmeticError, e:    
+            print "You found a new error. Congrats!\n\n" + str(e)
         
         finally:
             if started == True:
@@ -68,4 +71,14 @@ for x in range(0,1):
                 print "The first read took: " + str(end1 - start1) + " seconds"
                 print "The write took: " + str(end2 - start2) + " seconds"
                 print "The whole program took: " + str(end2 - start) + " seconds\n\n" 
+            else:
+                connected = False
             here = here.getNext()
+            
+            #print str(count) + "\n\n"
+            if (count > 1 and connected == True) or time.time()-startM > .2:
+                print "haha"
+                run = False
+                
+timeStop = time.time()                
+print "Tiem: " +str(timeStop - startM)

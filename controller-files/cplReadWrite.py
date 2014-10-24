@@ -1,7 +1,5 @@
 #!./BACpypesEnv/bin/python
 
-#import sys
-
 #Import BACpypes Stuff
 from bacpypes.core import run, stop
 from bacpypes.app import LocalDeviceObject, BIPSimpleApplication
@@ -15,15 +13,14 @@ from bacpypes.primitivedata import Real
 
 #random imports
 import time 
-
-
+import sys
+from ErrorClasses import *
 
 
 #Application Globals
 this_device = None
 this_application = None
 has_started = True
-request_addr = None
 applicationThread = None
 
 
@@ -38,7 +35,7 @@ class Application(BIPSimpleApplication):
         BIPSimpleApplication.__init__(self, device, address)
     
     def request(self, apdu):
-    	#print 'Passing along request...'
+        #print 'Passing along request...'
         self.__response_value = None
         BIPSimpleApplication.request(self, apdu)
 
@@ -52,15 +49,15 @@ class Application(BIPSimpleApplication):
         #Executed when a packet is recieved (not just a BACnet packet)
         try:
             if isinstance(apdu, ReadPropertyACK):
-	        	#print "Current Temperature: " + str(apdu.propertyValue.cast_out(Real)) + "\n"
-	        	self.__response_value = apdu.propertyValue.cast_out(Real)
+                #print "Current Temperature: " + str(apdu.propertyValue.cast_out(Real)) + "\n"
+                self.__response_value = apdu.propertyValue.cast_out(Real)
             elif isinstance(apdu, SimpleAckPDU):
-	        	self.__response_value = "Ack\n"
+                self.__response_value = "Ack\n"
             elif isinstance(apdu, AbortPDU):
-	        	print "apdu: " + str(apdu.apduAbortRejectReason) + "\n"
+                print "apdu: " + str(apdu.apduAbortRejectReason) + "\n"
             elif isinstance(apdu, Error):
-	        	print "apdu: " + str(apdu) + "\n"
-	        	
+                print "apdu: " + str(apdu) + "\n"
+                
         except Exception, e:
             print 'An error has been detained: ' + str(has_started) +", "+ str(e) + "\n"
     #__return_value = None
@@ -75,9 +72,9 @@ class BACpypeThread(Thread):
         stop()      
 
 def doStop():
-	stop()
-	applicationThread.join()
-	#applicationThread = None
+    stop()
+    applicationThread.join()
+    #applicationThread = None
 
 def read(device, portObject):
     request_addr = device.getRequestAddress()    
@@ -87,48 +84,46 @@ def read(device, portObject):
     maximumWait = 6  #seconds
     
     try: 
-		#--------------------------read property request
-		#verify datatype
-		#print "Reading..."
-		print request_addr, obj_type, port, prop_id
-		
-		if obj_type.isdigit():
-		    obj_type = int(obj_type)
-		elif not get_object_class(obj_type):
-		    raise ValueError, "unknown object type"
-		    
-		          
-		datatype = get_datatype(obj_type, prop_id)
-		if not datatype:
-			print ValueError, ": invalid property for object type"
-		
-		port = int(port)	
-		
-		#build request
-		request = ReadPropertyRequest(
-		    objectIdentifier=(obj_type, port), 
-		    propertyIdentifier=prop_id,
-		    )
-		request.pduDestination = Address(request_addr)
-		time.sleep(.01)  #I dont know why, but this makes the code work correctly.
-		#submit request
-		this_application.request(request)
-		#print "Waiting for reply..."
-		#wait for request
-		wait = 0
-		while this_application._Application__response_value == None and wait <= maximumWait:
-		    wait = wait + .01
-		    time.sleep(.01)
-		returnVal = this_application._Application__response_value
+        #--------------------------read property request
+        #verify datatype
+        #print "Reading..."
+        #print request_addr, obj_type, port, prop_id
         
+        if obj_type.isdigit():
+            obj_type = int(obj_type)
+        elif not get_object_class(obj_type):
+            raise ValueError, "unknown object type"
+            
+                
+        datatype = get_datatype(obj_type, prop_id)
+        if not datatype:
+            print ValueError, ": invalid property for object type"
         
+        port = int(port)
+        
+        #build request
+        request = ReadPropertyRequest(
+            objectIdentifier=(obj_type, port),
+            propertyIdentifier=prop_id,
+            )
+        request.pduDestination = Address(request_addr)
+        time.sleep(.01)  #I dont know why, but this makes the code work correctly.
+        #submit request
+        this_application.request(request)
+        #print "Waiting for reply..."
+        #wait for request
+        wait = 0
+        while this_application._Application__response_value == None and wait <= maximumWait:
+            wait = wait + .01
+            time.sleep(.01)
+        returnVal = this_application._Application__response_value
     except Exception, e:
-		returnVal = None
-		print 'An error has happened (CPLRW 126): ' + str(e) + "\n"        
+        returnVal = None
+        print 'An error has happened (CPLRW 126): ' + str(e) + "\n"
         
     finally:
-	    #print "the total wait time was: " + str(wait) + " seconds"
-	    return returnVal
+        #print "the total wait time was: " + str(wait) + " seconds"
+        return returnVal
 
 
 
@@ -140,78 +135,71 @@ def write(device, portObject, value):
     index = portObject.getIndex()
     priority = portObject.getPriority()
 
-
-
-	try:
-		#verify datatype
-		datatype = get_datatype(obj_type, prop_id)
-		if not datatype:
-			raise ValueError, ": invalid property for object type"
-		value = datatype(value)
-		request = WritePropertyRequest(objectIdentifier=(obj_type, obj_inst), propertyIdentifier=prop_id)
-		request.pduDestination = Address(request_addr)
-		request.propertyValue = Any()
-		request.propertyValue.cast_in(value)
-		request.propertyArrayIndex = index
-		request.priority = priority
-		this_application.request(request)
-		time.sleep(.1)
-		returnVal = this_application._Application__response_value
-	except:
-		returnVal = "Error, unable to write"
-
-	finally:
-		return returnVal
-
+    try:
+        #verify datatype
+        datatype = get_datatype(obj_type, prop_id)
+        if not datatype:
+            raise ValueError, ": invalid property for object type"
+        value = datatype(value)
+        request = WritePropertyRequest(objectIdentifier=(obj_type, obj_inst), propertyIdentifier=prop_id)
+        request.pduDestination = Address(request_addr)
+        request.propertyValue = Any()
+        request.propertyValue.cast_in(value)
+        request.propertyArrayIndex = index
+        request.priority = priority
+        this_application.request(request)
+        time.sleep(.1)
+        returnVal = this_application._Application__response_value
+    except:
+        returnVal = "Error, unable to write"
+    
+    finally:
+        return returnVal
+    
 def doStart(device):
-	global this_application, this_device, applicationThread, request_addr, has_started
-	this_application = None
-	this_device = None
-	applicationThread = None
-	request_addr = None
-	has_started = True
-	
-	try:
+    global this_application, this_device, applicationThread, has_started
+    this_application = None
+    this_device = None
+    applicationThread = None
+    has_started = False
+    
+    try:
 
-		#Defining Device
-		this_device = LocalDeviceObject(
-	    	#objectName="Name",
-	    	objectName=device.getObjectName(),
-	    	#objectIdentifier=2450,
-	    	objectIdentifier=int(device.getObjectIdentifier()),
-	    	maxApduLengthAccepted=int(device.getMaxApduLengthAccepted()),
-	    	#maxApduLenghtAccepted = int(device.getMaxApduLengthAccepted()),
-	    	segmentationSupported=device.getSegmentationSupported(), 
-	    	#device.getSegmentationSupported(),
-	    	vendorIdentifier=int(device.getVendorIdentifier()),
-	    	#int(device.getVendorIdentifier()),
-	    	)
-		
-		#request_addr = "192.168.92.68"
-		#request_addr = device.getRequestAddress()
-		#print 'req Add: ' + request_addr
+        #Defining Device
+        this_device = LocalDeviceObject(
+            objectName=device.getObjectName(),
+            objectIdentifier=int(device.getObjectIdentifier()),
+            maxApduLengthAccepted=int(device.getMaxApduLengthAccepted()),
+            segmentationSupported=device.getSegmentationSupported(), 
+            vendorIdentifier=int(device.getVendorIdentifier()),
+            )
         
-		pss = ServicesSupported()
-		pss['whoIs'] = 1
-		pss['iAm'] = 1
-		pss['readProperty'] = 1
-		pss['writeProperty'] = 1
+        pss = ServicesSupported()
+        pss['whoIs'] = 1
+        pss['iAm'] = 1
+        pss['readProperty'] = 1
+        pss['writeProperty'] = 1
 
-		this_device.protocolServicesSupported = pss.value 
-
-		this_application = Application(this_device, device.getDeviceAddress())
-		print "this Addr:" + str(device.getDeviceAddress())
-		#Start BACpypes Thread
-		applicationThread = BACpypeThread('BACPYPE-APP')
-		applicationThread.start()
-
-	except Exception, e:
-		has_started = False
-		print 'An error has occured: ' + str(e) 
-	
-	finally:
-		#print "Finally\n"
-		#print has_started
-		return has_started
-
-
+        this_device.protocolServicesSupported = pss.value 
+        try:
+            this_application =  Application(this_device, device.getDeviceAddress())
+        except:
+            print "here"
+            raise ArithmeticError#ComputerNotConnectedToIP(device.getObjectName(), getDeviceAddress())
+        
+        #print "this Addr:" + str(device.getDeviceAddress())
+        
+        #Start BACpypes Thread
+        applicationThread = BACpypeThread('BACPYPE-APP')
+        applicationThread.start()
+        has_started = True
+    
+    except Exception, e:
+        print "here too"
+        raise
+         
+    finally:
+        raise
+        return has_started
+    
+    

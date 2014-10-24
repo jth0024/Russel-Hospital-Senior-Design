@@ -1,105 +1,108 @@
-class AnalogInput(object):
-	
-	def __init__(self):
-	    self._type = 'analogInput'
-	    self._prop = 'presentValue'
-	def getType(self):
-		return self._type
-	def getProp(self):
-		return self._prop
-	def setType(self,type):
-		self._type = type
-	def setValue(self,value):
-		self._value = value	
+class AnalogInput(object):   
+    def __init__(self):
+        self._type = 'analogInput'
+        self._prop = 'presentValue'
+    def getType(self):
+        return self._type
+    def getProp(self):
+        return self._prop
+    def setType(self,type):
+        self._type = type
+    def setValue(self,value):
+        self._value = value	
 
 
 class AnalogOutput(object):
-	
-	def __init__(self):
-	    self._type = 'analogOutput'
-	    self._prop = 'presentValue'
-	    self._index = 0
-	    self._priority = 1
-	def getType(self):
-		return self._type
-	def getProp(self):
-		return self._prop
-	def getIndex(self):
-		return self._index
-	def getPriority(self):
-		return self._priority
-	def setType(self,Type):
-		self._type = Type
-	def setValue(self,value):
-		self._value = value
-	def setIndex(self, index):
-		self._index = index
-	def setPriority(self, priority):
-		self._priority = priority
+    
+    def __init__(self):
+        self._type = 'analogOutput'
+        self._prop = 'presentValue'
+        self._index = 0
+        self._priority = 1
+    def getType(self):
+        return self._type
+    def getProp(self):
+        return self._prop
+    def getIndex(self):
+        return self._index
+    def getPriority(self):
+        return self._priority
+    def setType(self,Type):
+        self._type = Type
+    def setValue(self,value):
+        self._value = value
+    def setIndex(self, index):
+        self._index = index
+    def setPriority(self, priority):
+        self._priority = priority
 
 class DigitalInput(object):
-	
-	def __init__(self):
-	    self._type = 'digitalInput'
-	    self._value = 'presentValue'
+    
+    def __init__(self):
+        self._type = 'digitalInput'
+        self._value = 'presentValue'
 
-	def gettype(self):
-		return self.type
-	def getvalue(self):
-		return self.value
-	def settype(self,type):
-		self.type = type
-	def setValue(self,value):
-		self.value = value	
+    def gettype(self):
+        return self.type
+    def getvalue(self):
+        return self.value
+    def settype(self,type):
+        self.type = type
+    def setValue(self,value):
+        self.value = value	
 
 
 class DigitalOutput(object):
-	def __init__(self):
-	    self._type = 'digitalOutput'
-	    self._value = 'presentValue'
-	    self._index = 0
-	    self._priority = 1
+    def __init__(self):
+        self._type = 'digitalOutput'
+        self._value = 'presentValue'
+        self._index = 0
+        self._priority = 1
 
-	def gettype(self):
-		return self.type
-	def getvalue(self):
-		return self.value
-	def getindex(self):
-		return self.index
-	def getpriority(self):
-		return self.priority
-	def settype(self,type):
-		self.type = type
-	def setValue(self,value):
-		self.value = value
-	def selfindex(self, index):
-		self.index = index
-	def selfpriority(self, priority):
-		self.priority = priority	
+    def gettype(self):
+        return self.type
+    def getvalue(self):
+        return self.value
+    def getindex(self):
+        return self.index
+    def getpriority(self):
+        return self.priority
+    def settype(self,type):
+        self.type = type
+    def setValue(self,value):
+        self.value = value
+    def selfindex(self, index):
+        self.index = index
+    def selfpriority(self, priority):
+        self.priority = priority	
 
 
 class ControlLoop(object):
-	def __init__(self):
-        self._connectedTo = 1
-	    return
+    def __init__(self):
+        self._connectedTo = None
     
-	def Ploop(self, setpoint,currentValue):
-		outputValue = self._pValue*(setpoint-currentValue)
-		return outputValue
-	def PIloop(self, setpoint,currentValue,pValue,iValue):
-		outputValue = 'Insert control eqation here'
-		return outputValue
-	def PIDloop(self, setpoint,currentValue,pValue,iValue,dValue):
-		outputValue = 'Insert control eqation here'
-		return outputValue
-    def getConnectedTo():
+    def __init__(self, pairedPort):
+        self._connectedTo = pairedPort
+    
+    def Ploop(self, ValueA, ValueB):
+        outputValue = self._pValue*(ValueA - ValueB)
+        return outputValue
+    def PIloop(self, setpoint,currentValue,pValue,iValue):
+        outputValue = 'Insert control eqation here'
+        return outputValue
+    def PIDloop(self, setpoint,currentValue,pValue,iValue,dValue):
+        outputValue = 'Insert control eqation here'
+        return outputValue
+    def getConnectedTo(self):
         return self._connectedTo
 
-### Inputs
+### Inputs - As of right now all calculations are done with 0 Volts == OFF
 #add name field
+#add deadband field
+
 
 class TempMA(AnalogInput,ControlLoop):
-    
+   #Mix Air Temperature sensor can controll dampers 
     def __init__(self, port):
         AnalogInput.__init__(self)
         ControlLoop.__init__(self)
@@ -128,14 +131,16 @@ class TempMA(AnalogInput,ControlLoop):
         self._dValue = dValue
 
 class TempPA(AnalogInput,ControlLoop):
-    def __init__(self, port):
+# Preheat Air Temperature sensor is used to controll the Heating coil
+    def __init__(self, port, pairedPort):
         AnalogInput.__init__(self)
-        ControlLoop.__init__(self)
+        ControlLoop.__init__(self, pairedPort)
         self._portNum = port
-        self._pValue = 2.3
+        self._pValue = 0.5
         self._iValue = 4
         self._dValue = 3
         self._controlled = True
+        self._deadband = 0.5
     def getControlled(self):
         return self._controlled
     def getPortNum(self):
@@ -154,16 +159,25 @@ class TempPA(AnalogInput,ControlLoop):
         return self._dValue
     def setDValue(self, dValue):
         self._dValue = dValue        
-
+    def Ploop(self, setPoint, currentValue):  
+        outputValue = ControlLoop.Ploop(self, setPoint - self._deadband, currentValue)
+        if outputValue < 0:
+            outputValue = 0.0
+        elif outputValue > 2.5:
+            outputValue = 2.5
+        return outputValue
 class TempSA(AnalogInput,ControlLoop):
-    def __init__(self, port):
+    #Supply air temperature sensor controlls the cooling coil
+
+    def __init__(self, port, pairedPort):
         AnalogInput.__init__(self)
-        ControlLoop.__init__(self)
+        ControlLoop.__init__(self, pairedPort)
         self._portNum = port
-        self._pValue = 2.3
+        self._pValue = 0.5
         self._iValue = 4
         self._dValue = 3
         self._controlled = True
+        self._deadband = 0.5
     def getControlled(self):
         return self._controlled
     def getPortNum(self):
@@ -182,9 +196,18 @@ class TempSA(AnalogInput,ControlLoop):
         return self._dValue
     def setDValue(self, dValue):
         self._dValue = dValue
-        
+    #Make an imported class from Controll Loop abstract
+    def Ploop(self, setPoint, currentValue):  
+        outputValue = ControlLoop.Ploop(self, currentValue, setPoint + self._deadband)
+        if outputValue < 0:
+            outputValue = 0.0
+        elif outputValue > 3:
+            outputValue = 3.0
+        return outputValue
+            
         
 class AirFlowOA(AnalogInput,ControlLoop):
+# Outside Air flow sensor controlls the OA damper    
     def __init__(self, port):
         AnalogInput.__init__(self)
         ControlLoop.__init__(self)
@@ -214,6 +237,7 @@ class AirFlowOA(AnalogInput,ControlLoop):
         
         
 class AirFlowRA(AnalogInput,ControlLoop):
+ # Return Air flow sensor controlls the RA damper    
     def __init__(self, port):
         AnalogInput.__init__(self)
         ControlLoop.__init__(self)
@@ -243,6 +267,7 @@ class AirFlowRA(AnalogInput,ControlLoop):
         
         
 class AirFlowREA(AnalogInput,ControlLoop):
+#Relief Air flow sensor controlls relief damper
     def __init__(self, port):
         AnalogInput.__init__(self)
         ControlLoop.__init__(self)
@@ -272,6 +297,7 @@ class AirFlowREA(AnalogInput,ControlLoop):
         
         
 class HumidityRA(AnalogInput,ControlLoop):
+#Return Air Humidity sensor controlls Humidifyer Valve  
     def __init__(self, port):
         AnalogInput.__init__(self)
         ControlLoop.__init__(self)
@@ -301,6 +327,7 @@ class HumidityRA(AnalogInput,ControlLoop):
         
         
 class CORA(AnalogInput,ControlLoop):
+# Return Air flow sensor controlls the RA damper     
     def __init__(self, port):
         AnalogInput.__init__(self)
         ControlLoop.__init__(self)
@@ -352,7 +379,7 @@ class TempOA(AnalogInput):
         return self._portNum
     def setPortNum(self, port):
         self._portNum = port
-	
+    
 class HumidityOA(AnalogInput):
     def __init__(self, port):
         AnalogInput.__init__(self)
@@ -746,12 +773,17 @@ class Device(object):
         self._foreignTTL = deviceDic['foreignttl']       
         self._ports = portDic
         self._next = None
-        self._online = True
-        self._manual = False
-        self._KILL = False
+        self._Application = None
+        
+    #    self._online = True
+    #    self._manual = False
+    #    self._KILL = False
         
     def addDevice(self, nextDevice):
         self._next = nextDevice
+    
+    def getApplication(self):   
+        return self._Application
 
     def getObjectName(self):   
         return self._objectName
@@ -839,5 +871,7 @@ class Device(object):
     def setNext(self, next):   
         self._next = next
 
+    def setApplication(self, app):   
+        self._Application = app
 
 
