@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sql_declarative import Base, Devices, Errors, Maintenance, AirHandlerOne, Setpoints
+from sql_declarative import Base, devices, errors, maintenance, controllerone,controllertwo, setpoints
 
 def row2dict(row):
     d = {}
@@ -17,18 +17,20 @@ def list2dict(list):
 	return d
 
 def queryRow(tableName):
-	if tableName == "Devices":
-		table = Devices
-	elif tableName == "Base":
-		table = Base
-	elif tableName == "Errors":
-		table = Errors
-	elif tableName == "Maintenance":
-		table = Maintenance
-	elif tableName == "AirHandlerOne":
-		table = AirHandlerOne
-	elif tableName == "Setpoints":
-		table = Setpoints
+	if tableName == "devices":
+		table = devices
+	elif tableName == "base":
+		table = base
+	elif tableName == "errors":
+		table = errors
+	elif tableName == "maintenance":
+		table = maintenance
+	elif tableName == "controllerone":
+		table = controllerone
+	elif tableName == "controllertwo":
+		table = controllertwo
+	elif tableName == "setpoints":
+		table = setpoints
 	#SQL alchemy process for creating the engine and session to query the database
 	#insert table name as a variable not a string
 	engine = create_engine('sqlite:///../database/database/rh.db')
@@ -54,18 +56,20 @@ def queryColumn(tableName,columnName):
 	#SQL alchemy process for creating the engine and session to query the database
 	#insert table name as a variable not a string, while the column name must be entered in as a string
 	#column name is then converted from a string using the get attribute command
-	if tableName == "Devices":
-		table = Devices
-	elif tableName == "Base":
-		table = Base
-	elif tableName == "Errors":
-		table = Errors
-	elif tableName == "Maintenance":
-		table = Maintenance
-	elif tableName == "AirHandlerOne":
-		table = AirHandlerOne
-	elif tableName == "Setpoints":
-		table = Setpoints
+	if tableName == "devices":
+		table = devices
+	elif tableName == "base":
+		table = base
+	elif tableName == "errors":
+		table = errors
+	elif tableName == "maintenance":
+		table = maintenance
+	elif tableName == "controllerone":
+		table = controllerone
+	elif tableName == "controllertwo":
+		table = controllertwo
+	elif tableName == "setpoints":
+		table = setpoints
 	engine = create_engine('sqlite:///../database/database/rh.db')
 	Base.metadata.bind = engine
 	DBSession = sessionmaker()
@@ -80,18 +84,20 @@ def queryColumn(tableName,columnName):
 
 
 def queryTable(tableName,key):
-	if tableName == "Devices":
-		table = Devices
-	elif tableName == "Base":
-		table = Base
-	elif tableName == "Errors":
-		table = Errors
-	elif tableName == "Maintenance":
-		table = Maintenance
-	elif tableName == "AirHandlerOne":
-		table = AirHandlerOne
-	elif tableName == "Setpoints":
-		table = Setpoints
+	if tableName == "devices":
+		table = devices
+	elif tableName == "base":
+		table = base
+	elif tableName == "errors":
+		table = errors
+	elif tableName == "maintenance":
+		table = maintenance
+	elif tableName == "controllerone":
+		table = controllerone
+	elif tableName == "controllertwo":
+		table = controllertwo
+	elif tableName == "setpoints":
+		table = setpoints
 	#Method takes the take name to query and returns a dictionary composed of a dictionary that contain all of the row information.
 	#The dicitionary that contains the row information uses the column name as the key, while the returned dictionary uses
 	#the unique ID as the key
@@ -112,18 +118,20 @@ def queryTable(tableName,key):
 
 def queryValue(tableName,columnName):
 	#Method uses SQLalchemy to return a single value. The value is determined by the columnName and is found on the last row.
-	if tableName == "Devices":
-		table = Devices
-	elif tableName == "Base":
-		table = Base
-	elif tableName == "Errors":
-		table = Errors
-	elif tableName == "Maintenance":
-		table = Maintenance
-	elif tableName == "AirHandlerOne":
-		table = AirHandlerOne
-	elif tableName == "Setpoints":
-		table = Setpoints
+	if tableName == "devices":
+		table = devices
+	elif tableName == "base":
+		table = base
+	elif tableName == "errors":
+		table = errors
+	elif tableName == "maintenance":
+		table = maintenance
+	elif tableName == "controllerone":
+		table = controllerone
+	elif tableName == "controllertwo":
+		table = controllertwo
+	elif tableName == "setpoints":
+		table = setpoints
 	engine = create_engine('sqlite:///../database/database/rh.db')
 	Base.metadata.bind = engine
 	DBSession = sessionmaker()
@@ -136,18 +144,20 @@ def queryValue(tableName,columnName):
 def queryValueSpecific(tableName,columnName,rowName,rowValue):
 	#Method uses SQLalchemy to return a single value. The value is determined by the columnName the row is 
 	#determined where the given row value is found and the given row.
-	if tableName == "Devices":
-		table = Devices
-	elif tableName == "Base":
-		table = Base
-	elif tableName == "Errors":
-		table = Errors
-	elif tableName == "Maintenance":
-		table = Maintenance
-	elif tableName == "AirHandlerOne":
-		table = AirHandlerOne
-	elif tableName == "Setpoints":
-		table = Setpoints
+	if tableName == "devices":
+		table = devices
+	elif tableName == "base":
+		table = base
+	elif tableName == "errors":
+		table = errors
+	elif tableName == "maintenance":
+		table = maintenance
+	elif tableName == "controllerone":
+		table = controllerone
+	elif tableName == "controllertwo":
+		table = controllertwo
+	elif tableName == "setpoints":
+		table = setpoints
 	engine = create_engine('sqlite:///../database/database/rh.db')
 	Base.metadata.bind = engine
 	DBSession = sessionmaker()

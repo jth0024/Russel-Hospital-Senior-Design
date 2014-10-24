@@ -1,21 +1,23 @@
 from sqlalchemy import create_engine, insert,update
 from sqlalchemy.orm import sessionmaker
-from sql_declarative import Base, Devices, Errors, Maintenance, AirHandlerOne, Setpoints
+from sql_declarative import Base, devices, errors, maintenance, controllerone, controllertwo, setpoints
  
 #Functions takes the the table name(i.e. the class found in sql_declarative) and a dictionary to insert all of the values into the database
 def insertNewRow(tableName, TheDict):
 	engine = create_engine('sqlite:///../database/database/rh.db')
 
-	if tableName == "Devices":
-		table = Devices
-	elif tableName == "Errors":
-		table = Errors
-	elif tableName == "Maintenance":
-		table = Maintenance
-	elif tableName == "AirHandlerOne":
-		table = AirHandlerOne
-	elif tableName == "Setpoints":
-		table = Setpoints
+	if tableName == "devices":
+		table = devices
+	elif tableName == "errors":
+		table = errors
+	elif tableName == "maintenance":
+		table = maintenance
+	elif tableName == "controllerone":
+		table = controllerone
+	elif tableName == "controllertwo":
+		table = controllertwo
+	elif tableName == "setpoints":
+		table = setpoints
 	# Bind the engine to the metadata of the Base class so that the
 	# declaratives can be accessed through a DBSession instance
 	Base.metadata.bind = engine
