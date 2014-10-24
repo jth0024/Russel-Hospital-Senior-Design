@@ -181,11 +181,11 @@ def doStart(device):
         pss['writeProperty'] = 1
 
         this_device.protocolServicesSupported = pss.value 
-        try:
-            this_application =  Application(this_device, device.getDeviceAddress())
-        except:
-            print "here"
-            raise ArithmeticError#ComputerNotConnectedToIP(device.getObjectName(), getDeviceAddress())
+        #try:
+        this_application =  Application(this_device, device.getDeviceAddress())
+        #except:
+            #print "here"
+            #raise ArithmeticError#ComputerNotConnectedToIP(device.getObjectName(), getDeviceAddress())
         
         #print "this Addr:" + str(device.getDeviceAddress())
         
@@ -193,13 +193,11 @@ def doStart(device):
         applicationThread = BACpypeThread('BACPYPE-APP')
         applicationThread.start()
         has_started = True
+        return has_started
     
     except Exception, e:
-        print "here too"
+       #print "here too"
         raise
-         
-    finally:
-        raise
-        return has_started
+        #print "Error: " + str(e) 
     
     

@@ -74,7 +74,7 @@ class DigitalOutput(object):
     def selfindex(self, index):
         self.index = index
     def selfpriority(self, priority):
-        self.priority = priority	
+        self.priority = priority
 
 
 class ControlLoop(object):

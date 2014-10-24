@@ -36,7 +36,7 @@ for x in range(0,1):
                     portObj = here.getPortItem(item)
                     readDic[int(portObj.getPortNum())] = read(here, portObj)
                 end1 = time.time()              ################################
-                #print "After Reading all ports: " + str(readDic)                 
+                print "After Reading all ports: " + str(readDic)                 
                 #commit it to the database
                 #insertRow(valDic)
                
@@ -45,7 +45,7 @@ for x in range(0,1):
                     portObj = here.getPortItem(item)
                     if portObj.getControlled():
                         manipulatedDic[portObj.getConnectedTo()] = portObj.Ploop(setpoint, readDic[portObj.getPortNum()])     #manipulatedDic should conatin the value from the Ploop with the key being the port of the actuator that the sensor is paired with
-                #print "after Ploop : " + str(manipulatedDic)
+                print "after Ploop : " + str(manipulatedDic)
                         
                 start2 = time.time()            ################################
                 #print "Started write ..."
@@ -62,8 +62,8 @@ for x in range(0,1):
         except ComputerNotConnectedToIP, exc:
             print exc 
         
-        except ArithmeticError, e:    
-            print "You found a new error. Congrats!\n\n" + str(e)
+        except:    
+            print "You found a new error. Congrats!\n\n" #+ str(e)
         
         finally:
             if started == True:
@@ -71,14 +71,14 @@ for x in range(0,1):
                 print "The first read took: " + str(end1 - start1) + " seconds"
                 print "The write took: " + str(end2 - start2) + " seconds"
                 print "The whole program took: " + str(end2 - start) + " seconds\n\n" 
-            else:
-                connected = False
+  #          else:
+  #              connected = False
             here = here.getNext()
-            
+            #time.sleep(2)
             #print str(count) + "\n\n"
-            if (count > 1 and connected == True) or time.time()-startM > .2:
-                print "haha"
-                run = False
+  #          if (count > 1 and connected == True) or time.time()-startM > .2:
+  #              print "haha"
+  #              run = False
                 
-timeStop = time.time()                
-print "Tiem: " +str(timeStop - startM)
+#timeStop = time.time()                
+#print "Tiem: " +str(timeStop - startM)
