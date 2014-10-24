@@ -1,3 +1,6 @@
+import sys
+sys.path.insert(0, '../database/database')
+from sql_insert import insertNewRow
 from createDeviceChain import createChain 
 from cplReadWrite import doStart, doStop, read, write
 import time, sys
@@ -38,7 +41,15 @@ for x in range(0,1):
                 end1 = time.time()              ################################
                 #print "After Reading all ports: " + str(readDic)                 
                 #commit it to the database
-                #insertRow(valDic)
+                array = ['tempOA','tempRA','tempMA','tempPA','tempSA','humidityOA']
+                valDic = {}
+                for i in range(0,len(readDic)):
+                    valDic[array[i]] = readDic[i+1]
+                print valDic
+                table = here.getObjectName()
+                tablename = table.lower()
+                print tablename
+                insertNewRow(tablename, valDic)
                
                  #manipulate data
                 for item in range(1,numberOfConnectedPorts):

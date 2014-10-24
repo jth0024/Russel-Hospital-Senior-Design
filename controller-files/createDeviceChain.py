@@ -9,7 +9,7 @@ from sql_query import queryColumn
 
 
 def createChain():
-    iniName = queryColumn('Devices', "ini")
+    iniName = queryColumn('devices', "ini")
     for index in range(0,len(iniName)):
         portDic = None
         deviceDic = None
