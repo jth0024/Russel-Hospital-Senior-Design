@@ -8,7 +8,7 @@ from sqlalchemy import create_engine
 Base = declarative_base()
  
 
-class Devices(Base):
+class devices(Base):
 	__tablename__ = 'devices'
 	id = Column(Integer, primary_key=True)
 	name = Column(String(250), nullable=False)
@@ -17,7 +17,7 @@ class Devices(Base):
 	mac = Column(String(250), nullable=False)
 	
 
-class Errors(Base):
+class errors(Base):
 	__tablename__= 'errors'
 	id = Column(Float, primary_key=True)
 	type = Column(String(250), nullable=False)
@@ -26,7 +26,7 @@ class Errors(Base):
 	location = Column(String(250))
 	device = Column(String(250), nullable=False)
 
-class Maintenance(Base):
+class maintenance(Base):
 	__tablename__ = 'maintenance'
 	id = Column(Float, primary_key=True)
 	timestamp = Column(DateTime, default=datetime.datetime.utcnow)
@@ -34,8 +34,8 @@ class Maintenance(Base):
 	priority = Column(Float)
 	description = Column(String(250), nullable=False)
 
-class AirHandlerOne(Base):
-	__tablename__ = 'airhandlerOne'
+class controllerone(Base):
+	__tablename__ = 'controllerone'
 	id = Column(Integer, primary_key=True)
 	timestamp = Column(DateTime, default=datetime.datetime.utcnow)
 	tempOA = Column(Float)
@@ -85,7 +85,58 @@ class AirHandlerOne(Base):
 	fanSpeedFrequency = Column(Float)
 	fanSpeedOutput = Column(Float)
 
-class Setpoints(Base):
+class controllertwo(Base):
+	__tablename__ = 'controllertwo'
+	id = Column(Integer, primary_key=True)
+	timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+	tempOA = Column(Float)
+	tempRA = Column(Float)
+	tempMA = Column(Float)
+	tempPA = Column(Float)
+	tempSA = Column(Float)
+	humidityOA = Column(Float)
+	humidityRA = Column(Float)
+	humiditySA = Column(Float)
+	airFlowOA = Column(Float)
+	airFlowRA = Column(Float)
+	airFlowREA = Column(Float)
+	airFlowSA = Column(Float)
+	filterPDrop = Column(Float)
+	coolingCoilPDrop = Column(Float)
+	heatingCoilPDrop = Column(Float)
+	coOA = Column(Float)
+	coRA = Column(Float)
+	coMA = Column(Float)
+	coSA = Column(Float)
+	fanVoltage = Column(Float)
+	fanAmperage = Column(Float)
+	fanPower = Column(Float)
+	fanPowerUsage = Column(Float)
+	fanStatus = Column(Boolean)
+	chilledWaterST = Column(Float)
+	chilledWaterRT = Column(Float)
+	chilledWaterTDrop = Column(Float)
+	chilledWaterSP = Column(Float)
+	chilledWaterRP = Column(Float)
+	chilledWaterPDrop = Column(Float)
+	chilledWaterFlow = Column(Float)
+	heatedWaterST = Column(Float)
+	heatedWaterRT = Column(Float)
+	heatedWaterTDrop = Column(Float)
+	heatedWaterSP = Column(Float)
+	heatedWaterRP = Column(Float)
+	heatedaterPDrop = Column(Float)
+	heatedWaterFlow = Column(Float)
+	damperPositionOA = Column(Float)
+	damperPositionRA = Column(Float)
+	damperPositionRE = Column(Float)
+	valuePositionCW = Column(Float)
+	valuePositionHW = Column(Float)
+	valuePositionHumidifier = Column(Float)
+	fanSpeedFrequency = Column(Float)
+	fanSpeedOutput = Column(Float)
+
+class setpoints(Base):
 	__tablename__ = 'setpoint'
 	id = Column(Integer, primary_key=True)
 	timestamp = Column(DateTime, default=datetime.datetime.utcnow)
