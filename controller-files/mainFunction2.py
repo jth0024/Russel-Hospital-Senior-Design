@@ -12,8 +12,16 @@ setpoint = 80
 deviceList = createChain()
 started = False
 
+#Testing Thread connections
+connected = True
+startM = time.time()
+count = 0
+run = True
 
+
+#while run == True:
 for x in range(0,1):
+    count = count + 1
     start = time.time()                     ################################
     here = deviceList
     while here != None:
@@ -27,24 +35,21 @@ for x in range(0,1):
                 manipulatedDic = {}
                 
                 # Reading all ports on device
-                print "Reading..."
                 for item in range(1,numberOfConnectedPorts):
                     portObj = here.getPortItem(item)
-                    readDic[portObj.getPortName().toLower()] = read(here, portObj)
+                    readDic[int(portObj.getPortNum())] = read(here, portObj)
                 end1 = time.time()              ################################
                 print "After Reading all ports: " + str(readDic)                 
-                
-                #commit it to the database, NOT FUllY WORKING. Uses dummy data for column name.
-    #     array = ['tempOA','tempRA','tempMA','tempPA','tempSA','humidityOA']
-    #            valDic = {}
-    #            for i in range(0,len(readDic)):
-    #                
-    #                valDic[array[i]] = readDic[i+1]
-    #            print valDic
-    #           table = here.getObjectName()
-    #            tablename = table.lower()
-    #            print tablename
-    #            insertNewRow(tablename, valDic)
+                #commit it to the database
+                array = ['tempOA','tempRA','tempMA','tempPA','tempSA','humidityOA']
+                valDic = {}
+                for i in range(0,len(readDic)):
+                    valDic[array[i]] = readDic[i+1]
+                print valDic
+                table = here.getObjectName()
+                tablename = table.lower()
+                print tablename
+                insertNewRow(tablename, valDic)
                
                  #manipulate data
                 for item in range(1,numberOfConnectedPorts):
@@ -69,7 +74,7 @@ for x in range(0,1):
             print exc 
         
         except:    
-            print "You found a new error. Congrats!\n\n" + str(e)
+            print "You found a new error. Congrats!\n\n" #+ str(e)
         
         finally:
             if started == True:

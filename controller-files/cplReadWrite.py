@@ -158,9 +158,6 @@ def write(device, portObject, value):
     
 def doStart(device):
     global this_application, this_device, applicationThread, has_started
-    this_application = None
-    this_device = None
-    applicationThread = None
     has_started = False
     
     try:
@@ -181,13 +178,8 @@ def doStart(device):
         pss['writeProperty'] = 1
 
         this_device.protocolServicesSupported = pss.value 
-        #try:
         this_application =  Application(this_device, device.getDeviceAddress())
-        #except:
-            #print "here"
-            #raise ArithmeticError#ComputerNotConnectedToIP(device.getObjectName(), getDeviceAddress())
-        
-        #print "this Addr:" + str(device.getDeviceAddress())
+
         
         #Start BACpypes Thread
         applicationThread = BACpypeThread('BACPYPE-APP')
@@ -197,7 +189,6 @@ def doStart(device):
     
     except Exception, e:
        #print "here too"
-        raise
-        #print "Error: " + str(e) 
+        print "Error: " + str(e) 
     
     
