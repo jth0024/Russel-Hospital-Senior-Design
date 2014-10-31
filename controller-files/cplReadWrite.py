@@ -13,8 +13,7 @@ from bacpypes.primitivedata import Real
 
 #random imports
 import time 
-import sys
-from ErrorClasses import *
+from ErrorHandler import ErrorHandler
 
 
 #Application Globals
@@ -86,8 +85,8 @@ def read(device, portObject):
     try: 
         #--------------------------read property request
         #verify datatype
-        #print "Reading..."
-        #print request_addr, obj_type, port, prop_id
+       # print "Reading..."
+        print request_addr, obj_type, port, prop_id
         
         if obj_type.isdigit():
             obj_type = int(obj_type)
@@ -110,7 +109,8 @@ def read(device, portObject):
         time.sleep(.01)  #I dont know why, but this makes the code work correctly.
         #submit request
         this_application.request(request)
-        #print "Waiting for reply..."
+  #      print "Waiting for reply..."
+        
         #wait for request
         wait = 0
         while this_application._Application__response_value == None and wait <= maximumWait:
@@ -122,7 +122,7 @@ def read(device, portObject):
         print 'An error has happened (CPLRW 126): ' + str(e) + "\n"
         
     finally:
-        #print "the total wait time was: " + str(wait) + " seconds"
+        #print "the total wait time was: " + str(wait) + " seconds" 
         return returnVal
 
 
@@ -188,7 +188,5 @@ def doStart(device):
         return has_started
     
     except Exception, e:
-       #print "here too"
-        print "Error: " + str(e) 
-    
-    
+        ErrorHandler(e,device)
+
