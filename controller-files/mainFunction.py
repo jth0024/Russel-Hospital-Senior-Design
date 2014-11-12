@@ -24,10 +24,8 @@ for x in range(0,2):
     while here != None:
         try:
             print "\nConnecting to " + here.getObjectName()
-<<<<<<< HEAD
             #started = doStart(here)
 
-=======
             ipAddress = here.getRequestAddress()
             with open(os.devnull, "wb") as limbo:
                 result=subprocess.Popen(["ping", "-c", "1", "-n", "-W", "2", ipAddress],
@@ -36,7 +34,6 @@ for x in range(0,2):
                         started = False
                 else:
                         started = doStart(here)
->>>>>>> FETCH_HEAD
             if started == True:
                 start1 = time.time()            ################################
                 numberOfConnectedPorts = len(here.getPort())+1
