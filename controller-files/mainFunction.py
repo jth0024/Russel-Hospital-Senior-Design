@@ -5,6 +5,8 @@ from createDeviceChain import createChain
 from cplReadWrite import doStart, doStop, read, write
 import time, sys
 from ErrorHandler import ErrorHandler
+import os
+import subprocess
 
 from threading import Thread
 
@@ -18,11 +20,23 @@ started = False
 for x in range(0,2):
     start = time.time()                     ################################
     here = deviceList
+
     while here != None:
         try:
             print "\nConnecting to " + here.getObjectName()
+<<<<<<< HEAD
             #started = doStart(here)
 
+=======
+            ipAddress = here.getRequestAddress()
+            with open(os.devnull, "wb") as limbo:
+                result=subprocess.Popen(["ping", "-c", "1", "-n", "-W", "2", ipAddress],
+                        stdout=limbo, stderr=limbo).wait()
+                if result:
+                        started = False
+                else:
+                        started = doStart(here)
+>>>>>>> FETCH_HEAD
             if started == True:
                 start1 = time.time()            ################################
                 numberOfConnectedPorts = len(here.getPort())+1
@@ -65,7 +79,8 @@ for x in range(0,2):
                 end2 = time.time()              ################################
         
         except Exception, e:    
-            ErrorHandler(e)
+            # ErrorHandler(e)
+            print e
         
         finally:
             if started == True:
