@@ -74,22 +74,6 @@ def doStop():
     stop()
     applicationThread.join()
 
-def addDevice(device):
-    #Defining Device
-    localDevice = LocalDeviceObject(
-        objectName=device.getObjectName(),
-        objectIdentifier=int(device.getObjectIdentifier()),
-        maxApduLengthAccepted=int(device.getMaxApduLengthAccepted()),
-        segmentationSupported=device.getSegmentationSupported(), 
-        vendorIdentifier=int(device.getVendorIdentifier()),
-        )    
-    this_application.add_object(localDevice)
-
-def removeDevice(device):
-    this_application.delete_object(device)
-
-def nextDevice():
-    this_application.iter_objects()
 
 def read(device, portObject): 
 
@@ -102,6 +86,8 @@ def read(device, portObject):
     try: 
 
         #Jordan Trying to open thread in application
+        #applicationThread = BACpypeThread('BACPYPE-APP')
+        #applicationThread.start()  
 
         #--------------------------read property request
         #verify datatype
@@ -144,6 +130,10 @@ def read(device, portObject):
     finally:
         #print "the total wait time was: " + str(wait) + " seconds" 
 
+        #join thread (jordan)
+        stop()
+        applicationThread.join()
+
         return returnVal
 
 
@@ -184,8 +174,7 @@ def doStart(device):
     try:
 
         #Defining Device
-        #this_device = LocalDeviceObject(
-        localDevice = LocalDeviceObject(
+        this_device = LocalDeviceObject(
             objectName=device.getObjectName(),
             objectIdentifier=int(device.getObjectIdentifier()),
             maxApduLengthAccepted=int(device.getMaxApduLengthAccepted()),
@@ -199,10 +188,8 @@ def doStart(device):
         pss['readProperty'] = 1
         pss['writeProperty'] = 1
 
-        #this_device.protocolServicesSupported = pss.value 
-        localDevice.protocolServicesSupported = pss.value
-        #this_application =  Application(this_device, device.getDeviceAddress())
-        this_application = Application(localDevice, device.getDeviceAddress())
+        this_device.protocolServicesSupported = pss.value 
+        this_application =  Application(this_device, device.getDeviceAddress())
 
         
         #Start BACpypes Thread
@@ -212,6 +199,5 @@ def doStart(device):
         return has_started
     
     except Exception, e:
-        print "Error: doStart()"
         ErrorHandler(e,device)
 

@@ -6,6 +6,8 @@ from cplReadWrite import doStart, doStop, read, write
 import time, sys
 from ErrorHandler import ErrorHandler
 
+from threading import Thread
+
 # STILL NEED TO DO ERROR CHECKING FOR WHOLE PROGRAM
 
 setpoint = 80
@@ -13,13 +15,14 @@ deviceList = createChain()
 started = False
 
 
-for x in range(0,1):
+for x in range(0,2):
     start = time.time()                     ################################
     here = deviceList
     while here != None:
         try:
             print "\nConnecting to " + here.getObjectName()
-            started = doStart(here)
+            #started = doStart(here)
+
             if started == True:
                 start1 = time.time()            ################################
                 numberOfConnectedPorts = len(here.getPort())+1
@@ -52,7 +55,7 @@ for x in range(0,1):
                     if portObj.getControlled():
                         #manipulatedDic should conatin the value from the Ploop with the key being the port of the actuator that the sensor is paired with
                         manipulatedDic[portObj.getConnectedTo()] = portObj.Ploop(setpoint, readDic[portObj.getPortNum()])     
-                print "after Ploop : " + str(manipulatedDic)
+                print "P-Loop result: " + str(manipulatedDic)
                         
                 start2 = time.time()            ################################
                 #print "Started write ..."

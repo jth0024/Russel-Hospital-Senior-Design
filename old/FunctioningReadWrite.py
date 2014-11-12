@@ -228,14 +228,14 @@ try:
 #    if _debug: _log.debug("initialization")
 #    if _debug: _log.debug("    - args: %r", args)
 
-    str_ipAddress = "192.168.92.68"
+    str_ipAddress = "192.178.92.78"
     # make a device object
     this_device = LocalDeviceObject(
-        objectName= str_ipAddress,#args.ini.objectname,
-        objectIdentifier= 2450, #int(args.ini.objectidentifier),
-        maxApduLengthAccepted= 1024, #int(args.ini.maxapdulengthaccepted),
-        segmentationSupported="segmentedBoth", #args.ini.segmentationsupported,
-        vendorIdentifier=25, #int(args.ini.vendoridentifier),
+        objectName= args.ini.objectname,
+        objectIdentifier= int(args.ini.objectidentifier),
+        maxApduLengthAccepted= int(args.ini.maxapdulengthaccepted),
+        segmentationSupported=args.ini.segmentationsupported,
+        vendorIdentifier=int(args.ini.vendoridentifier),
         )
 
     # build a bit string that knows about the bit names
@@ -249,7 +249,7 @@ try:
     this_device.protocolServicesSupported = pss.value
 
     # make a simple application
-    this_application = ReadPropertyApplication(this_device, "192.168.92.69")
+    this_application = ReadPropertyApplication(this_device, "192.178.92.79")
     this_console = ReadWritePropertyConsoleCmd()
 
 #    _log.debug("running")
