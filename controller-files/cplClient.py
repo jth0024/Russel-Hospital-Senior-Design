@@ -1,47 +1,56 @@
-from cplReadWrite import read, write, doStop, doStart, addDevice, removeDevice, nextDevice
+#from cplReadWrite import read, write, doStop, doStart, addDevice, removeDevice, nextDevice
+from cplMultipleApplications import read, createApplication, doStop
 from createDeviceChain import createChain 
 import time
+
 
 deviceChain = createChain()
 device = deviceChain
 
 
-i = 1
+i = 0
 
 while device != None:
 	try:
-		if i == 1:
-			doStart(device)
-		else:
-			addDevice(device)
+		# if i == 1:
+		# 	createApplication(device)
+		# else:
+		# 	addDevice(device)
+		if i < 2:
+			createApplication(device)
 	except:
 		print "Except: "
 	finally:
 		device = device.getNext()
 		i += 1
+
+	
 for x in range(0,2):
 	device = deviceChain
-
+	i = 0	
 	while device != None:
 
 		print device.getObjectName()
 
 		try:
-			print "Try: "
-			numberOfConnectedPorts = len(device.getPort())+1
-			readDic = {}
-			manipulatedDic = {}
-			for item in range(1,numberOfConnectedPorts):
-				portObj = device.getPortItem(item)
-				readDic[item] = read(device, portObj)
-				print "After Reading all ports: " + str(readDic)                 
+			if i < 2:
+				print "Try: "
+				numberOfConnectedPorts = len(device.getPort())+1
+				readDic = {}
+				manipulatedDic = {}
+				print "Preparing to read ports..."
+				for item in range(1,numberOfConnectedPorts):
+					portObj = device.getPortItem(item)
+					readDic[item] = read(i, device, portObj)
+					print "After Reading all ports: " + str(readDic)                 
 	  
 		except:
 			print "Except: "
 		finally:
 			print "Finally: "
 			device = device.getNext()
-			nextDevice()
+			#print getDeviceByID(device.get)
+			i += 1
 
 		
 doStop()

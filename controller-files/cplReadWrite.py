@@ -21,6 +21,8 @@ this_device = None
 this_application = None
 has_started = True
 applicationThread = None
+#contains all our applications
+
 
 
 
@@ -75,6 +77,7 @@ def doStop():
     applicationThread.join()
 
 def addDevice(device):
+    global this_application
     #Defining Device
     localDevice = LocalDeviceObject(
         objectName=device.getObjectName(),
@@ -86,13 +89,18 @@ def addDevice(device):
     this_application.add_object(localDevice)
 
 def removeDevice(device):
+    global this_application
     this_application.delete_object(device)
 
 def nextDevice():
-    this_application.iter_objects()
+    global this_application
+    return this_application.iter_objects()
+
+def getDeviceByID(deviceID):
+    return this_application.get_object_id(deviceID)
 
 def read(device, portObject): 
-
+    global this_application
     request_addr = device.getRequestAddress()    
     obj_type = portObject.getType()
     port = portObject.getPortNum()

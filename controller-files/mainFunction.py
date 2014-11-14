@@ -17,7 +17,7 @@ deviceList = createChain()
 started = False
 
 
-for x in range(0,2):
+for x in range(0,1):
     start = time.time()                     ################################
     here = deviceList
 
