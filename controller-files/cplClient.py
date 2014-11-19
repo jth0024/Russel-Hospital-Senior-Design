@@ -12,10 +12,6 @@ i = 0
 
 while device != None:
 	try:
-		# if i == 1:
-		# 	createApplication(device)
-		# else:
-		# 	addDevice(device)
 		if i < 2:
 			createApplication(device)
 	except:
@@ -49,11 +45,14 @@ for x in range(0,2):
 		finally:
 			print "Finally: "
 			device = device.getNext()
-			#print getDeviceByID(device.get)
 			i += 1
 
-		
-doStop()
+i = 0
+device = deviceChain
+while device != None and i < 2:
+	doStop(i)
+	i += 1
+	device = device.getNext()
 
 # obj_type = 'analogInput'
 # obj_inst = int(2)

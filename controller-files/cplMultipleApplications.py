@@ -4,6 +4,7 @@
 from bacpypes.core import run, stop
 from bacpypes.app import LocalDeviceObject, BIPSimpleApplication
 from bacpypes.basetypes import ServicesSupported
+import threading
 from threading import Thread
 from bacpypes.apdu import ReadPropertyRequest, Error, AbortPDU, ReadPropertyACK, SimpleAckPDU, WritePropertyRequest
 from bacpypes.pdu import Address
@@ -69,7 +70,10 @@ class BACpypeThread(Thread):
 	def stop(self):
 		stop()      
 
-def doStop():
+def doStop(appIndex):
+	#threading.currentThread().join()
+	global applications
+	application = applications[appIndex]
 	stop()
 
 # def addDevice(device):
