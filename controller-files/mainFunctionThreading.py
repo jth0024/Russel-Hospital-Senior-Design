@@ -1,51 +1,58 @@
+import sys
+sys.path.insert(0, '../database/database')
+from sql_insert import insertNewRow
 from createDeviceChain import createChain 
-from cplReadWrite import doStart, doStop, read, write
+from cplReadWriteThreading import doStart, doStop, read, write
 import time, sys
-from ErrorClasses import *
+from ErrorHandler import ErrorHandler
 
 # STILL NEED TO DO ERROR CHECKING FOR WHOLE PROGRAM
 
-setpoint = 20
-
+setpoint = 80
 deviceList = createChain()
-here = deviceList
-while here != None:
-    doStart(here)
-    here = here.getNext()
+started = False
+applicationDic = {}
 
-time.sleep(3)
+device = deviceList
+while device != None:
+    applicationDic[device.getObjectName()] = doStart(device)
+    device = device.getNext()
+print applicationDic
+time.sleep(5)
+
+
 
 for x in range(0,1):
     start = time.time()                     ################################
-    
     here = deviceList
     while here != None:
         try:
-            print "Connecting to " + here.getObjectName()
-            start1 = time.time()            ################################
-            numberOfConnectedPorts = len(here.getPort())+1
-            readDic = {}
-            manipulatedDic = {}
-            
-            # Reading all ports on device
-            for item in range(1,numberOfConnectedPorts):
-                portObj = here.getPortItem(item)
-                readDic[int(portObj.getPortNum())] = read(here, portObj)
-            end1 = time.time()              ################################
-            print "After Reading all ports: " + str(readDic)                 
-            
-
-            
-        except ComputerNotConnectedToIP, exc:
-            print exc 
-        
+            print "\nConnecting to " + here.getObjectName()
+        #    started = doStart(here)
+            app = (applicationDic[here.getObjectName()] != None)
+            if app == True:
+                start1 = time.time()            ################################
+                numberOfConnectedPorts = len(here.getPort())+1
+                readDic = {}
+                manipulatedDic = {}
+                
+                # Reading all ports on device
+                for item in range(1,numberOfConnectedPorts):
+                    portObj = here.getPortItem(item)
+                    #readDic[portObj.getPortName()] = read(here, portObj)
+                    readDic[item] = read(applicationDic[here.getObjectName()], here, portObj)
+                end1 = time.time()              ################################
+                print "After Reading all ports: " + str(readDic)                 
+            else:
+                print "No application for device %s" %here.getObjectName()
         except Exception, e:    
-            print "You found a new error. Congrats!:" + str(e)
+            ErrorHandler(e)
         
         finally:
-            print "The first read took: " + str(end1 - start1) + " seconds"
+            if app == True: 
+                doStop()
+                #print "The first read took: " + str(end1 - start1) + " seconds"
+                #print "The write took: " + str(end2 - start2) + " seconds"
+                #print "The whole program took: " + str(end2 - start) + " seconds\n\n" 
             here = here.getNext()
-            
-doStop()    
-            
-            
+

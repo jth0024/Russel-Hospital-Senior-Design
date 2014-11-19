@@ -2,3 +2,7 @@
 *.pyc
 
 *.pyc
+
+controller-files/iniFiles/ControllerTwo.ini
+
+controller-files/cplClient.py
