@@ -1,7 +1,7 @@
 #!./BACpypesEnv/bin/python
 
 #Import BACpypes Stuff
-from bacpypes.core import run, stop
+from bacpypes.core import run, stop, deferred
 from bacpypes.app import LocalDeviceObject, BIPSimpleApplication
 from bacpypes.basetypes import ServicesSupported
 import threading
@@ -37,6 +37,7 @@ class Application(BIPSimpleApplication):
 		#print 'Passing along request...'
 		self.__response_value = None
 		BIPSimpleApplication.request(self, apdu)
+		#deferred(BIPSimpleApplication.request, self, apdu)
 
 	def indication(self, apdu):
 		BIPSimpleApplication.indication(self, apdu)
@@ -71,33 +72,10 @@ class BACpypeThread(Thread):
 		stop()      
 
 def doStop(appIndex):
-	#threading.currentThread().join()
 	global applications
 	application = applications[appIndex]
+	#deferred(stop(), application)
 	stop()
-
-# def addDevice(device):
-#     global this_application
-#     #Defining Device
-#     localDevice = LocalDeviceObject(
-#         objectName=device.getObjectName(),
-#         objectIdentifier=int(device.getObjectIdentifier()),
-#         maxApduLengthAccepted=int(device.getMaxApduLengthAccepted()),
-#         segmentationSupported=device.getSegmentationSupported(), 
-#         vendorIdentifier=int(device.getVendorIdentifier()),
-#         )    
-#     this_application.add_object(localDevice)
-
-# def removeDevice(device):
-#     global this_application
-#     this_application.delete_object(device)
-
-# def nextDevice():
-#     global this_application
-#     return this_application.iter_objects()
-
-def getDeviceByID(appIndex, deviceID):
-	return applications[appIndex].get_object_id(deviceID)
 
 def read(appIndex, device, portObject): 
 	global applications
@@ -147,44 +125,48 @@ def read(appIndex, device, portObject):
 		print 'An error has happened (CPLRW 126): ' + str(e) + "\n"
 		
 	finally:
-		#print "the total wait time was: " + str(wait) + " seconds" 
+		#print "the total wait time was: " + str(wait) + " seconds"
+		if (wait >= maximumWait):
+			print "Couldn't read: Connection timed out"
 		return returnVal
 
 
 
-# def write(device, portObject, value):
-#     request_addr = device.getRequestAddress()
-#     obj_type = portObject.getType()
-#     obj_inst = portObject.getPortNum()
-#     prop_id = portObject.getProp()
-#     index = portObject.getIndex()
-#     priority = portObject.getPriority()
+def write(appIndex, device, portObject, value):
+	global applications
+	application = applications[appIndex]
 
-#     try:
-#         #verify datatype
-#         datatype = get_datatype(obj_type, prop_id)
-#         if not datatype:
-#             raise ValueError, ": invalid property for object type"
-#         value = datatype(value)
-#         request = WritePropertyRequest(objectIdentifier=(obj_type, obj_inst), propertyIdentifier=prop_id)
-#         request.pduDestination = Address(request_addr)
-#         request.propertyValue = Any()
-#         request.propertyValue.cast_in(value)
-#         request.propertyArrayIndex = index
-#         request.priority = priority
-#         this_application.request(request)
-#         time.sleep(.1)
-#         returnVal = this_application._Application__response_value
-#     except:
-#         returnVal = "Error, unable to write"
-	
-#     finally:
-#         return returnVal
+	request_addr = device.getRequestAddress()
+	obj_type = portObject.getType()
+	obj_inst = portObject.getPortNum()
+	prop_id = portObject.getProp()
+	index = portObject.getIndex()
+	priority = portObject.getPriority()
+
+	try:
+		#verify datatype
+		datatype = get_datatype(obj_type, prop_id)
+		if not datatype:
+			raise ValueError, ": invalid property for object type"
+		value = datatype(value)
+		request = WritePropertyRequest(objectIdentifier=(obj_type, obj_inst), propertyIdentifier=prop_id)
+		request.pduDestination = Address(request_addr)
+		request.propertyValue = Any()
+		request.propertyValue.cast_in(value)
+		request.propertyArrayIndex = index
+		request.priority = priority
+		application.request(request)
+		time.sleep(.1)
+		returnVal = application._Application__response_value
+	except:
+	    returnVal = "Error, unable to write"
+
+	finally:
+	    return returnVal
 	
 def createApplication(device):
 	global applicationCount, applications
 	try:
-		print 1
 		#Defining Device
 		threadName = 'app_' + str(applicationCount)
 		localDevice = LocalDeviceObject(
@@ -194,21 +176,16 @@ def createApplication(device):
 			segmentationSupported=device.getSegmentationSupported(), 
 			vendorIdentifier=int(device.getVendorIdentifier()),
 			)
-		print 2
 		pss = ServicesSupported()
 		pss['whoIs'] = 1
 		pss['iAm'] = 1
 		pss['readProperty'] = 1
 		pss['writeProperty'] = 1
-		print 3
 		localDevice.protocolServicesSupported = pss.value
 		application = Application(localDevice, device.getDeviceAddress())
-		print 4
 		applications.append(application)
 		applicationThread = BACpypeThread(threadName)
 		applicationThread.start()
-		print 5
-		print "\n"
 		applicationCount += 1
 	
 	except Exception, e:
