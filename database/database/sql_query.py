@@ -83,7 +83,7 @@ def queryColumn(tableName,columnName):
 	#appending line calls out the zeroth spot in a list to only place only the desired string into the list 
 
 
-def queryTable(tableName,key):
+def queryTable(tableName, key):
 	if tableName == "devices":
 		table = devices
 	elif tableName == "base":

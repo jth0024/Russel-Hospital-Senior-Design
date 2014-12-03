@@ -1,14 +1,18 @@
 #Add database-files to our path
 import sys
-sys.path.insert(0, '../../../database-files')
+sys.path.insert(0, '../../database/database')
 
 #flask imports
 from rh import app
 import os
 from flask import jsonify, render_template, redirect, url_for, request, flash
 
+#python modules
+import ConfigParser
+
 #Our Modules
 from sql_query import queryTable
+#import sql_declarative
 
 #---------------------Sample Data-----------------------
 #alerts 0-Completed, 1-Warning, 2-Critical
@@ -60,11 +64,28 @@ def return_equipment():
 	#devices = queryTable("Devices")
 	return render_template("equipment.html")
 
-@app.route('/rh/api/v1.0/get-equipment', methods = ['GET'])
+@app.route('/rh/api/v1.0/equipment/all', methods = ['GET'])
 def return_equipment_list():
-	queryResult = queryTable("Devices")
+	queryResult = queryTable('devices', 'name')
 	#print queryResult["ControllerThree"]
 	return jsonify(queryResult)
+
+@app.route('/rh/api/v1.0/equipment/ini', methods = ['POST'])
+def create_ini():
+	config = ConfigParser.ConfigParser()
+	config[BACpypes] = {"objectName" : "ControllerOne",
+						"address" : "192.168.92.69",
+						"objectIdentifier" : "2451",
+						"maxApduLengthAccepted" : "1024",
+						"segmentationSupported" : "segmentedBoth",
+						"vendorIdentifier" : "245",
+						"foreignPort" : "0",
+						"foreignBBMD" : "0.0.0.0",
+						"foreignTTL" : "30",
+						}
+	config[Ports] = {"portOne" : "LED", "portTwo" : "ThermistorCC", "portThree" : "LED"}
+	with open('example.ini', 'w') as configfile:
+		config.write(configfile)
 
 @app.route('/rh/api/v1.0/login', methods = ['GET', 'POST'])
 def login():

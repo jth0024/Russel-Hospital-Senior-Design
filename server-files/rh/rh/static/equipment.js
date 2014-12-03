@@ -11,7 +11,7 @@ function PortForm(number) {
     self.input_categories = ko.observableArray(["Temperature", "Humidity", "Air Flow", "Air Pressure", "C02", "Fan", "Water"]);
     self.output_categories = ko.observableArray(["Damper Position", "Valve Position", "Fan Speed"]);
     self.input_types = ko.observableArray(["Outdoor Air", "Return Air", "Mixed Air", "Preheat Air", "Supply Air"]);
-    self.output_types = ko.observableArray(["Outdoor Air Dampper", "Return Air Damper", "relief/exhaust damper"]);
+    self.output_types = ko.observableArray(["Outdoor Air Damper", "Return Air Damper", "relief/exhaust damper"]);
     self.ioTypeSelected = ko.observable();
 }
 
@@ -26,6 +26,8 @@ function Device(name, ip_address) {
 function IndexViewModel() {
     var self = this;
 
+    self.equipmentGetURI = "http://localhost:5000/rh/api/v1.0/equipment/all"
+    self.equipmentPostURI = "http://localhost:5000/rh/api/v1.0/equipment/ini"
     self.device_name = ko.observable();
     self.ip_address = ko.observable();
     self.mac_address = ko.observable();
@@ -48,9 +50,10 @@ function IndexViewModel() {
     self.submitFormData = function(formElement) {
         self.portForms.removeAll();
         $("#submit-ports").addClass("disabled");
+        $.post("http://localhost:5000/rh/api/v1.0/equipment/ini")
     }
 
-    $.getJSON("http://localhost:5000/rh/api/v1.0/get-equipment", function(data) { 
+    $.getJSON("http://localhost:5000/rh/api/v1.0/equipment/all", function(data) { 
         for (device in data) {
             self.devices.push(new Device(data[device].name, data[device].ip));
         }
