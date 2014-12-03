@@ -12,6 +12,8 @@ import ConfigParser
 
 #Our Modules
 from sql_query import queryTable
+from sql_insert import insertNewRow
+from sql_declarative import databaseCreation
 #import sql_declarative
 
 #---------------------Sample Data-----------------------
@@ -66,7 +68,7 @@ def return_equipment():
 
 @app.route('/rh/api/v1.0/equipment/all', methods = ['GET'])
 def return_equipment_list():
-	queryResult = queryTable('devices', 'name')
+	queryResult = queryTable("devices", 'name', 'sqlite:///../../database/database/rh.db')
 	#print queryResult["ControllerThree"]
 	return jsonify(queryResult)
 

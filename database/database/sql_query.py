@@ -16,7 +16,7 @@ def list2dict(list):
 		d[key]= list[i]
 	return d
 
-def queryRow(tableName):
+def queryRow(tableName, path):
 	if tableName == "devices":
 		table = devices
 	elif tableName == "base":
@@ -33,7 +33,8 @@ def queryRow(tableName):
 		table = setpoints
 	#SQL alchemy process for creating the engine and session to query the database
 	#insert table name as a variable not a string
-	engine = create_engine('sqlite:///../database/database/rh.db')
+	#engine = create_engine('sqlite:///../database/database/rh.db')
+	engine = create_engine(path)
 	Base.metadata.bind = engine
 	DBSession = sessionmaker()
 	DBSession.bind = enginesession = DBSession()
@@ -52,7 +53,7 @@ def queryRowSpecific(tableName,key,columnName):
 	value = table[columnName]
 	return value
 
-def queryColumn(tableName,columnName):
+def queryColumn(tableName,columnName, path):
 	#SQL alchemy process for creating the engine and session to query the database
 	#insert table name as a variable not a string, while the column name must be entered in as a string
 	#column name is then converted from a string using the get attribute command
@@ -70,7 +71,8 @@ def queryColumn(tableName,columnName):
 		table = controllertwo
 	elif tableName == "setpoints":
 		table = setpoints
-	engine = create_engine('sqlite:///../database/database/rh.db')
+	#engine = create_engine('sqlite:///../database/database/rh.db')
+	engine = create_engine(path)
 	Base.metadata.bind = engine
 	DBSession = sessionmaker()
 	DBSession.bind = enginesession = DBSession()
@@ -83,7 +85,7 @@ def queryColumn(tableName,columnName):
 	#appending line calls out the zeroth spot in a list to only place only the desired string into the list 
 
 
-def queryTable(tableName, key):
+def queryTable(tableName, key, path):
 	if tableName == "devices":
 		table = devices
 	elif tableName == "base":
@@ -102,7 +104,8 @@ def queryTable(tableName, key):
 	#The dicitionary that contains the row information uses the column name as the key, while the returned dictionary uses
 	#the unique ID as the key
 	#engine = create_engine('sqlite:///rh.db')
-	engine = create_engine('sqlite:///../database/database/rh.db')
+	#engine = create_engine('sqlite:///../database/database/rh.db')
+	engine = create_engine(path)
 
 	Base.metadata.bind = engine
 	DBSession = sessionmaker()
@@ -116,7 +119,7 @@ def queryTable(tableName, key):
 	return dict
 
 
-def queryValue(tableName,columnName):
+def queryValue(tableName,columnName, path):
 	#Method uses SQLalchemy to return a single value. The value is determined by the columnName and is found on the last row.
 	if tableName == "devices":
 		table = devices
@@ -132,7 +135,8 @@ def queryValue(tableName,columnName):
 		table = controllertwo
 	elif tableName == "setpoints":
 		table = setpoints
-	engine = create_engine('sqlite:///../database/database/rh.db')
+	#engine = create_engine('sqlite:///../database/database/rh.db')
+	engine = create_engine(path)
 	Base.metadata.bind = engine
 	DBSession = sessionmaker()
 	DBSession.bind = enginesession = DBSession()
@@ -141,7 +145,7 @@ def queryValue(tableName,columnName):
 	value  = session.query(varableSelect).order_by(table.id.desc()).first()
 	return value[0]
 
-def queryValueSpecific(tableName,columnName,rowName,rowValue):
+def queryValueSpecific(tableName,columnName,rowName,rowValue, path):
 	#Method uses SQLalchemy to return a single value. The value is determined by the columnName the row is 
 	#determined where the given row value is found and the given row.
 	if tableName == "devices":
@@ -158,7 +162,8 @@ def queryValueSpecific(tableName,columnName,rowName,rowValue):
 		table = controllertwo
 	elif tableName == "setpoints":
 		table = setpoints
-	engine = create_engine('sqlite:///../database/database/rh.db')
+	#engine = create_engine('sqlite:///../database/database/rh.db')
+	engine = create_engine(path)
 	Base.metadata.bind = engine
 	DBSession = sessionmaker()
 	DBSession.bind = enginesession = DBSession()

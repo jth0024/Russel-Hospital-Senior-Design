@@ -9,7 +9,7 @@ from sql_query import queryColumn
 
 
 def createChain():
-    iniName = queryColumn('devices', "ini")
+    iniName = queryColumn('devices', "ini", 'sqlite:///../database/database/rh.db')
     for index in range(0,len(iniName)):
         portDic = None
         deviceDic = None
