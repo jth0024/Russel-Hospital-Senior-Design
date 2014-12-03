@@ -3,8 +3,9 @@ from sqlalchemy.orm import sessionmaker
 from sql_declarative import Base, devices, errors, maintenance, controllerone, controllertwo, setpoints
  
 #Functions takes the the table name(i.e. the class found in sql_declarative) and a dictionary to insert all of the values into the database
-def insertNewRow(tableName, TheDict):
-	engine = create_engine('sqlite:///../database/database/rh.db')
+def insertNewRow(tableName, TheDict, path):
+	#engine = create_engine('sqlite:///../database/database/rh.db')
+	engine = create_engine(path)
 
 	if tableName == "devices":
 		table = devices

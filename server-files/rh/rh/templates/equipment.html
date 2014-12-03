@@ -25,10 +25,27 @@
         </table>
 	</div>
 	<div class="tab-pane" id="trending">
-		<div class="jumbotron">
-		  <h1>Trending</h1>
-		  <p>This is where the trending data will go.  Right now I don't have any trending data, so enjoy this placeholder text as well.</p>
-		</div>
+		<h1>Controllers</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Port 1</th>
+                    <th>Port 2</th>
+                    <th>Port 3</th>
+                    <th>Timestamp</th>
+                </tr>                    
+            </thead>
+            <tbody data-bind="foreach: trends">
+                <tr>
+                    <td data-bind="text: name">##</td>
+                    <td data-bind="text: value1">##</td>
+                    <td data-bind="text: value2">##</td>
+                    <td data-bind="text: value3">##</td>
+                    <td data-bind="text: timestamp">##</td>
+                </tr>
+            </tbody>
+        </table>
 	</div>
 	<div class="tab-pane" id="add_device">
 	    <form data-bind="submit: displayPortForms" class="panel panel-default">

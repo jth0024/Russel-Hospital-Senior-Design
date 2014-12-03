@@ -21,6 +21,15 @@ function Device(name, ip_address) {
     self.ip_address = ip_address;
 }
 
+function Read(name, value1, value2, value3, timestamp) {
+    var self = this;
+    self.name = name;
+    self.value1 = value1;
+    self.value2 = value2;
+    self.value3 = value3;
+    self.timestamp = timestamp;
+}
+
 
 //---------------------------------Model------------------------------
 function IndexViewModel() {
@@ -36,6 +45,7 @@ function IndexViewModel() {
     self.numPortsSelected = ko.observable();
     self.portForms = ko.observableArray([]);
     self.devices = ko.observableArray([]);
+    self.trends = ko.observableArray([]);
 
     // Operations
     self.displayPortForms = function(formElement) {
@@ -59,6 +69,31 @@ function IndexViewModel() {
         }
         console.log(data);
     })
+
+    self.updateTrends = function() {
+
+        self.trends.removeAll();
+
+        $.getJSON("http://localhost:5000/rh/api/v1.0/equipment/controllerone", function(data) { 
+            for (trend in data) {
+                self.trends.push(new Read("Controller One", data[trend].tempOA, data[trend].coOA, data[trend].humidityOA, data[trend].timestamp));
+            }
+            console.log(data);
+        })
+
+        $.getJSON("http://localhost:5000/rh/api/v1.0/equipment/controllertwo", function(data) { 
+            for (trend in data) {
+                self.trends.push(new Read("Controller Two", data[trend].tempOA, data[trend].coOA, data[trend].humidityOA, data[trend].timestamp));
+            }
+            console.log(data);
+        }) 
+
+        self.trends.sort();       
+    }
+    self.updateTrends();
+    setInterval(self.updateTrends, 15000);
+
+
 
 }
 

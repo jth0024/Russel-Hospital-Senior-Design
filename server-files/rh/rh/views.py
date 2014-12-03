@@ -72,10 +72,16 @@ def return_equipment_list():
 	#print queryResult["ControllerThree"]
 	return jsonify(queryResult)
 
+@app.route('/rh/api/v1.0/equipment/<string:controller_id>', methods = ['GET'])
+def return_trend_data(controller_id):
+	print controller_id
+	queryResult = queryTable(controller_id, 'timestamp', 'sqlite:///../../database/database/rh.db')
+	return jsonify(queryResult)
+
 @app.route('/rh/api/v1.0/equipment/ini', methods = ['POST'])
 def create_ini():
 	config = ConfigParser.ConfigParser()
-	config[BACpypes] = {"objectName" : "ControllerOne",
+	config['BACpypes'] = {"objectName" : "ControllerOne",
 						"address" : "192.168.92.69",
 						"objectIdentifier" : "2451",
 						"maxApduLengthAccepted" : "1024",
@@ -85,7 +91,7 @@ def create_ini():
 						"foreignBBMD" : "0.0.0.0",
 						"foreignTTL" : "30",
 						}
-	config[Ports] = {"portOne" : "LED", "portTwo" : "ThermistorCC", "portThree" : "LED"}
+	config['Ports'] = {"portOne" : "LED", "portTwo" : "ThermistorCC", "portThree" : "LED"}
 	with open('example.ini', 'w') as configfile:
 		config.write(configfile)
 

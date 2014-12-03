@@ -41,9 +41,11 @@ class Application(BIPSimpleApplication):
 
 	def indication(self, apdu):
 		BIPSimpleApplication.indication(self, apdu)
+		#deferred(BIPSimpleApplication.indication, self, apdu)
 
 	def response(self, apdu):
 		BIPSimpleApplication.response(self, apdu)
+		#deferred(BIPSimpleApplication.response, self, apdu)
 
 	def confirmation(self, apdu):
 		#Executed when a packet is recieved (not just a BACnet packet)
@@ -74,7 +76,8 @@ class BACpypeThread(Thread):
 def doStop(appIndex):
 	global applications
 	application = applications[appIndex]
-	#deferred(stop(), application)
+	#print application
+	#deferred(stop, application)
 	stop()
 
 def read(appIndex, device, portObject): 
