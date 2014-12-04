@@ -43,23 +43,6 @@ for x in range(0,2):
 
 			print "After Reading all ports: " + str(readDic)
 
-
-			#----------------------------------------
-			#Hard Coded write statements for database
-			print "Writing values to database..."
-			#These are just possible column key names. Ideally these would be read from a configuration database and would reflect
-			#the actual key for the port.  
-			dummyColList = ['tempOA', 'humidityOA' ,'coOA', 'coRA', 'tempRA', 'tempMA', 'tempSA', 'damperPositionRA']
-			temp = {}
-			for j in range(0, len(readDic)):
-				temp[dummyColList[j]] = readDic[j + 1]
-			print str(temp)
-			if i == 0:
-				insertNewRow('controllerone', temp, 'sqlite:///../database/database/rh.db')
-			if i == 1:
-				insertNewRow('controllertwo', temp, 'sqlite:///../database/database/rh.db')
-			#----------------------------------------
-
 			for item in range(1,numberOfConnectedPorts):
 				portObj = device.getPortItem(item)
 				if portObj.getControlled():
