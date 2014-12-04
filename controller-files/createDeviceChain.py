@@ -1,7 +1,3 @@
-# This file creates a singly linked list of Device objects. Each device object holds all of the information that is needed for a single controller and a pointer to the next device object in the list. 
-#The last item in the list holds a pointer to a null item to signify the end of the list.
-
-
 import sys
 sys.path.append('../database/database')
 from iniParser import iniParser, CompIPToRequestIP, parsePorts
@@ -10,9 +6,10 @@ from sql_query import queryColumn
 
 
 
-#SUMMARY
+#This function has no input and returns a singly linked list of Device objects. Each device object holds all of the information that is needed for a single controller and a pointer to the next device object in the list. 
+#The last item in the list holds a pointer to a null item to signify the end of the list. 
 def createChain():
-    # This retrives the name of all of the ini files that are listed in the database.
+    # This retrieves the name of all of the ini files that are listed in the database.
     iniName = queryColumn('devices', "ini")
         
     for index in range(0,len(iniName)):
@@ -32,11 +29,12 @@ def createChain():
         for port in portDic:
             portDic[port] = instantiatePortClass(portDic[port], portNumber(port))
         
-        #This if statement links the device objects into the linked list. I do not think the elif statement is nessacary but I did not want to remove it or change the cose befor the presentation.
+        #This if statement links the device objects into the linked list. 
         if index == 0:
             deviceList = Device(deviceDic, portDic)
             counter = deviceList
-        elif index ==1 :
+        #I do not think the elif statement is necessary but I did not want to remove it or change the code before the presentation.
+		elif index ==1 :
             temp = Device(deviceDic, portDic)
             deviceList.addDevice(temp)
             counter = counter.getNext()                     
@@ -48,18 +46,20 @@ def createChain():
     return deviceList
 
 
-#This method 
+#This method takes in the name of port object as a string and a port number for port where the sensor or actuator is connected to the device.
+#
+#eventually there needs to be an if statement for every actuator and sensor in Class.py. These are just place holder values for initial testing
 def instantiatePortClass(str_className,portNum):
     if str_className.lower() == "led":
         return DamperPositionOA(portNum)
     elif str_className.lower() == "thermistorcc":
-        return TempSA(portNum, 1)
+        return TempSA(portNum, 1)  # the hard coded 1 in this line ties the port object for this sensor to the port where the corresponding actuator is attached
     elif str_className.lower() == "thermistorhc":
         return TempPA(portNum, 3)
     else:
-        return "Error: Type not reconised"
+        return "Error: Type not recognised"
     
-#   
+#This method turns the name of the port into the numerical value of the port  
 def portNumber(str_portNum):
     if str_portNum.lower() == "portone":
         return 1
