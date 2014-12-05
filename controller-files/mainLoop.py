@@ -14,8 +14,6 @@ device = deviceChain
 setpoint = 72
 
 
-i = 0
-
 while device != None:
 	try:
 		createApplication(device)
@@ -23,8 +21,8 @@ while device != None:
 		print "Except: "
 	finally:
 		device = device.getNext()
-		i += 1
-
+		
+		
 #This outer for loop determines how many times we ask the devices for information. Eventually this will be and infinite loop
 #All of the print statements are here for diagnostic reasons. They will be removed from the final product
 for x in range(0,2):
