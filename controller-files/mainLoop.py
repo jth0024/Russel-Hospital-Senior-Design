@@ -18,8 +18,7 @@ i = 0
 
 while device != None:
 	try:
-		if i < 2:
-			createApplication(device)
+		createApplication(device)
 	except:
 		print "Except: "
 	finally:
