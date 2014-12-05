@@ -10,7 +10,7 @@ from sql_query import queryColumn
 #The last item in the list holds a pointer to a null item to signify the end of the list. 
 def createChain():
     # This retrieves the name of all of the ini files that are listed in the database.
-    iniName = queryColumn('devices', "ini")
+    iniName = queryColumn('devices', 'ini', 'sqlite:///../database/database/rh.db')
         
     for index in range(0,len(iniName)):
         portDic = None  #a dictionary of port objects
@@ -34,7 +34,7 @@ def createChain():
             deviceList = Device(deviceDic, portDic)
             counter = deviceList
         #I do not think the elif statement is necessary but I did not want to remove it or change the code before the presentation.
-		elif index ==1 :
+        elif index ==1 :
             temp = Device(deviceDic, portDic)
             deviceList.addDevice(temp)
             counter = counter.getNext()                     
