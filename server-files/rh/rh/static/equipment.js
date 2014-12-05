@@ -70,7 +70,7 @@ function IndexViewModel() {
         console.log(data);
     })
 
-    self.updateTrends = function() {
+    self.updateTrends = function(id) {
 
         self.trends.removeAll();
 
@@ -88,7 +88,7 @@ function IndexViewModel() {
             console.log(data);
         }) 
 
-        self.trends.sort();       
+        self.trends.sort(function(left, right) { return left.timestamp == right.timestamp ? 0 : (left.timestamp < right.timestamp ? -1 : 1) });       
     }
     self.updateTrends();
     setInterval(self.updateTrends, 15000);
