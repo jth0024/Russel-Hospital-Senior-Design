@@ -6,7 +6,12 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
 
 Base = declarative_base()
- 
+  #Each class represents an individual table in the database.
+ #Analog values should be a float and not a integer
+ #Manditory information like ip addresses should have nullable as false while 
+ #information like tempOA that doesn't have to be used should be nullable(which is the default state)
+ #Naming convention has been set so that table names are all lowercase 
+ #For simplification column names should be converted to all lower case as well
 
 class devices(Base):
 	__tablename__ = 'devices'
@@ -152,10 +157,11 @@ class setpoints(Base):
 
 def databaseCreation():
 	global Base
-	# Create an engine that stores data in the local directory's
-	# sqlalchemy_example.db file.
+	#the engine creates a dictionary called rh.db
+	#sqlite:/// with three forward slashes allow you to choose a directory using an relative path
+	#sqlite://// with four forward slashes allows you to choose a directory using an absolute path
 	engine = create_engine('sqlite:///../database/database/rh.db')
-	# Create all tables in the engine. This is equivalent to "Create Table"
-	# statements in raw SQL.
+	# Create all tables in the engine. This is equivalent to "Create Table” statements in raw SQL.
+	
 	Base.metadata.create_all(engine)
 	return 'Database created'
